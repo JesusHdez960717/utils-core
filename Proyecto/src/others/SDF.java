@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Yo
  */
-public class DateFormat {
+public class SDF {
 
     public static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -21,7 +21,7 @@ public class DateFormat {
         return SDF.format(d);
     }
 
-    public static Date format(String s) throws ParseException {
+    public static Date parse(String s) throws ParseException {
         return SDF.parse(s);
     }
 
