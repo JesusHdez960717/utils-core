@@ -5,9 +5,6 @@
  */
 package others;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Formatter;
 
 /**
@@ -16,17 +13,7 @@ import java.util.Formatter;
  */
 public class Misc {
 
-    public static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
-
-    public static String format(Date d) {
-        return SDF.format(d);
-    }
-
-    public static Date format(String s) throws ParseException {
-        return SDF.parse(s);
-    }
-
-    public static float round2f(double numero) {//sale con un punto separando 
+    public static float round2f(double numero) {
         return Float.parseFloat(new Formatter().format("%.2f", numero).toString().replace(',', '.'));
     }
 
