@@ -26,7 +26,6 @@ public class FILE {
                 FileUtils.copyDirectoryToDirectory(fFrom, fTo);//ok
             }
         } else if (fFrom.isFile()) {
-            fTo.mkdirs();
             if (fTo.isDirectory()) {//file into directory
                 FileUtils.copyFileToDirectory(fFrom, fTo);
             } else {//file to file
