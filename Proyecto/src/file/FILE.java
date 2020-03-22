@@ -32,7 +32,7 @@ public class FILE {
                 FileUtils.copyFile(fFrom, fTo);//ok
             }
         } else {
-            throw new IOException("File don't found.");
+            throw new IOException(fFrom.getAbsolutePath() + " don't found.");
         }
     }
 }
