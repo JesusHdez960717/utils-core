@@ -26,14 +26,13 @@ public class FILE {
                 FileUtils.copyDirectoryToDirectory(fFrom, fTo);//ok
             }
         } else if (fFrom.isFile()) {
-            fTo.mkdirs();
             if (fTo.isDirectory()) {//file into directory
                 FileUtils.copyFileToDirectory(fFrom, fTo);
             } else {//file to file
                 FileUtils.copyFile(fFrom, fTo);//ok
             }
         } else {
-            throw new IOException("File don't found.");
+            throw new IOException(fFrom.getAbsolutePath() + " don't found.");
         }
     }
 }
