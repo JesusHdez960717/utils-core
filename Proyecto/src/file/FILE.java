@@ -35,4 +35,15 @@ public class FILE {
             throw new IOException(fFrom.getAbsolutePath() + " don't found.");
         }
     }
+
+    public static void delete(String path) throws IOException {
+        File f = new File(path);
+        if (f.isDirectory()) {
+            FileUtils.deleteDirectory(f);
+        } else if (f.isFile()) {
+            f.delete();
+        } else {
+            throw new IOException("The path is not a directori neither a file.");
+        }
+    }
 }
