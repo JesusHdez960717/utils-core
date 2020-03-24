@@ -21,6 +21,10 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
     public SemanticVersioningModel() {
     }
 
+    public static boolean isSemanticVersioning(String ver) {
+        return new StringTokenizer(ver, ".").countTokens() >= 3;
+    }
+
     public SemanticVersioningModel(String version) {
         StringTokenizer l = new StringTokenizer(version, ".");
         mayor = Integer.parseInt(l.nextToken());
