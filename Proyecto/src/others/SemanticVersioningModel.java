@@ -17,6 +17,7 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
     private int mayor;
     private int minor;
     private int bug;
+    private String extra = "";
 
     public SemanticVersioningModel() {
     }
@@ -26,12 +27,31 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
         mayor = Integer.parseInt(l.nextToken());
         minor = Integer.parseInt(l.nextToken());
         bug = Integer.parseInt(l.nextToken());
+        while (l.hasMoreTokens()) {
+            extra += ".";
+            extra += l.nextToken();
+        }
     }
 
     public SemanticVersioningModel(int mayor, int minor, int bug) {
         this.mayor = mayor;
         this.minor = minor;
         this.bug = bug;
+    }
+
+    public SemanticVersioningModel(int mayor, int minor, int bug, String extra) {
+        this.mayor = mayor;
+        this.minor = minor;
+        this.bug = bug;
+        this.extra = extra;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 
     public int getMayor() {
@@ -60,7 +80,7 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
 
     @Override
     public String toString() {
-        return mayor + "." + minor + "." + bug;
+        return mayor + "." + minor + "." + bug + extra;
     }
 
     @Override
