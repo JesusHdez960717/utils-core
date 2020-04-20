@@ -7,11 +7,13 @@ package others;
 
 import java.io.Serializable;
 import java.util.StringTokenizer;
+import lombok.Data;
 
 /**
  *
  * @author Yo
  */
+@Data
 public class SemanticVersioningModel implements Serializable, Comparable<SemanticVersioningModel> {
 
     private int mayor;
@@ -46,38 +48,6 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
         this.extra = extra;
     }
 
-    public String getExtra() {
-        return extra;
-    }
-
-    public void setExtra(String extra) {
-        this.extra = extra;
-    }
-
-    public int getMayor() {
-        return mayor;
-    }
-
-    public void setMayor(int mayor) {
-        this.mayor = mayor;
-    }
-
-    public int getMinor() {
-        return minor;
-    }
-
-    public void setMinor(int minor) {
-        this.minor = minor;
-    }
-
-    public int getBug() {
-        return bug;
-    }
-
-    public void setBug(int bug) {
-        this.bug = bug;
-    }
-
     @Override
     public String toString() {
         return mayor + "." + minor + "." + bug + extra;
@@ -85,9 +55,9 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
 
     @Override
     public int compareTo(SemanticVersioningModel o) {
-        int compMayor = Integer.compare(mayor, o.getMayor());
-        int compMinor = Integer.compare(minor, o.getMinor());
-        int compBug = Integer.compare(bug, o.getBug());
+        int compMayor = Integer.compare(mayor, o.mayor);
+        int compMinor = Integer.compare(minor, o.minor);
+        int compBug = Integer.compare(bug, o.bug);
         if (compMayor == 0) {
             if (compMinor == 0) {
                 return compBug;

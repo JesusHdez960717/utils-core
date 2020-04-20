@@ -8,11 +8,13 @@ package others;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import lombok.Data;
 
 /**
  *
  * @author Yo
  */
+@Data
 public class SDF {
 
     public static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
