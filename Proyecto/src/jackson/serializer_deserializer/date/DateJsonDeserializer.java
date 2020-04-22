@@ -19,7 +19,7 @@ public class DateJsonDeserializer extends JsonDeserializer<Date> {
         TreeNode root = p.getCodec().readTree(p);
         int d = Integer.parseInt(((TextNode) root.get("dia")).textValue());
         int m = Integer.parseInt(((TextNode) root.get("mes")).textValue());
-        int a = Integer.parseInt(((TextNode) root.get("anno")).textValue());
+        int a = Integer.parseInt(((TextNode) root.get("anno")).textValue()) - 1900;
         return new Date(a, m, d);
     }
 }
