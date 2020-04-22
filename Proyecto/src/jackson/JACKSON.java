@@ -16,10 +16,15 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.ArrayType;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import jackson.serializer_deserializer.color.ColorJsonDeserializer;
+import jackson.serializer_deserializer.color.ColorJsonSerializer;
+import jackson.serializer_deserializer.date.DateJsonDeserializer;
+import jackson.serializer_deserializer.date.DateJsonSerializer;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  *
@@ -63,8 +68,12 @@ public class JACKSON {
         SimpleModule colorModule = new SimpleModule("Color Module");
         colorModule.addSerializer(Color.class, new ColorJsonSerializer());
         colorModule.addDeserializer(Color.class, new ColorJsonDeserializer());
-
         om.registerModule(colorModule);
+        
+        SimpleModule dateModule = new SimpleModule("Date Module");
+        dateModule.addSerializer(Date.class, new DateJsonSerializer());
+        dateModule.addDeserializer(Date.class, new DateJsonDeserializer());
+        om.registerModule(dateModule);
     }
 
     public static void registerModule(Module module) {
