@@ -36,4 +36,15 @@ public class SHA {
         return null;
     }
 
+    public static String hash(String text, String algo) {
+        try {
+            MessageDigest mDigest = MessageDigest.getInstance(algo);
+            byte[] result = mDigest.digest(text.getBytes());
+            return String.format("%1$064x", new java.math.BigInteger(1, result));
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }
