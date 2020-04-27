@@ -69,7 +69,7 @@ public class JACKSON {
         colorModule.addSerializer(Color.class, new ColorJsonSerializer());
         colorModule.addDeserializer(Color.class, new ColorJsonDeserializer());
         om.registerModule(colorModule);
-        
+
         SimpleModule dateModule = new SimpleModule("Date Module");
         dateModule.addSerializer(Date.class, new DateJsonSerializer());
         dateModule.addDeserializer(Date.class, new DateJsonDeserializer());
@@ -77,6 +77,9 @@ public class JACKSON {
     }
 
     public static void registerModule(Module module) {
+        if (om == null) {
+            initObjectMapper();
+        }
         om.registerModule(module);
     }
 
