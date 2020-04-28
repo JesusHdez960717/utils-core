@@ -24,7 +24,7 @@ public class DateJsonSerializer extends JsonSerializer<Date> {
 
         gen.writeFieldName("anno");
         gen.writeString(String.valueOf(value.getYear()));
-        
+
         gen.writeEndObject();
     }
 }

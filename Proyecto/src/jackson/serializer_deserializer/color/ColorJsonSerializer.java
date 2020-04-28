@@ -27,7 +27,7 @@ public class ColorJsonSerializer extends JsonSerializer<Color> {
 
         gen.writeFieldName("a");
         gen.writeString(String.valueOf(value.getAlpha()));
-        
+
         gen.writeEndObject();
     }
 }
