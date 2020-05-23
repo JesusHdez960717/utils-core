@@ -13,7 +13,7 @@ import lombok.Data;
 public class SDF {
 
     public static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
-    public static final SimpleDateFormat SDF_MONTH = new SimpleDateFormat("MMMM/yyyy");
+    public static final SimpleDateFormat SDF_MONTH = new SimpleDateFormat("MMMM / yyyy");
     public static final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy");
     public static final SimpleDateFormat SDF_HMS = new SimpleDateFormat("hh:mm:ss");
 
@@ -26,7 +26,7 @@ public class SDF {
     }
 
     public static String formatMonth(Date d) {
-        return SDF_MONTH.format(d);
+        return SDF_MONTH.format(d).toUpperCase();
     }
 
     public static Date parseMonth(String s) throws ParseException {
