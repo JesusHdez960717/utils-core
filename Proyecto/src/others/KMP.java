@@ -10,6 +10,10 @@ public class KMP {
     private static String lastKey = "";//P = key
     private static int b[] = new int[0];//b = back table
 
+    public static boolean contain(Object text, Object key) {
+        return contain(text.toString(), key.toString());
+    }
+
     public static boolean contain(String text, String key) {
         String keyProcess = key.trim().toLowerCase();
         String textProcess = text.trim().toLowerCase();
