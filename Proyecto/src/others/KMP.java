@@ -13,7 +13,7 @@ public class KMP {
     public static boolean contain(String text, String key) {
         String keyProcess = key.trim().toLowerCase();
         String textProcess = text.trim().toLowerCase();
-        
+
         if (keyProcess.isEmpty()) {
             return true;
         }
@@ -26,7 +26,7 @@ public class KMP {
             return;
         }
         lastKey = key;
-        b = new int[lastKey.length()];
+        b = new int[lastKey.length() + 1];
 
         int i = 0, j = -1;
         b[0] = -1; // starting values
