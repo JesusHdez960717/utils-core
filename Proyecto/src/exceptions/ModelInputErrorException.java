@@ -27,7 +27,7 @@ public class ModelInputErrorException extends IllegalArgumentException implement
     }
 
     public void addException(String sms) {
-        all.add(new IllegalArgumentException(sms));
+        all.add(new ModelInputErrorException(sms));
     }
 
     @Override
