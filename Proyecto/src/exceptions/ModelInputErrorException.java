@@ -35,7 +35,7 @@ public class ModelInputErrorException extends IllegalArgumentException implement
         if (all.isEmpty()) {
             return true;
         } else {
-            throw new ModelInputErrorException(all);
+            throw this;
         }
     }
 

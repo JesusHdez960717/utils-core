@@ -23,7 +23,7 @@ public class DateJsonSerializer extends JsonSerializer<Date> {
         gen.writeString(String.valueOf(value.getMonth()));
 
         gen.writeFieldName("anno");
-        gen.writeString(String.valueOf(value.getYear()));
+        gen.writeString(String.valueOf(value.getYear() + 1900));
 
         gen.writeEndObject();
     }
