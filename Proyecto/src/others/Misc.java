@@ -1,6 +1,8 @@
 package others;
 
+import java.util.Date;
 import java.util.Formatter;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -10,6 +12,10 @@ public class Misc {
 
     public static float round2f(double numero) {
         return Float.parseFloat(new Formatter().format("%.2f", numero).toString().replace(',', '.'));
+    }
+
+    public long daysBetween(Date from, Date to) {
+        return TimeUnit.DAYS.convert(Math.abs(to.getTime() - from.getTime()), TimeUnit.MILLISECONDS);
     }
 
     public static float evaluate(float a, String op, float b) {
