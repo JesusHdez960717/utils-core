@@ -2,6 +2,7 @@ package jackson;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,6 +27,13 @@ public class JACKSON {
 
     private static ObjectMapper om;
 
+    public static String toString(Object value) throws JsonProcessingException {
+        if (om == null) {
+            initObjectMapper();
+        }
+        return om.writerWithDefaultPrettyPrinter().writeValueAsString(value);
+    }
+
     public static void write(File resultFile, Object value) throws IOException, JsonGenerationException, JsonMappingException {
         if (om == null) {
             initObjectMapper();
@@ -48,6 +56,27 @@ public class JACKSON {
     }
 
     public static <T extends Object> T read(File src, JavaType javaType) throws IOException, JsonParseException, JsonMappingException {
+        if (om == null) {
+            initObjectMapper();
+        }
+        return om.readValue(src, javaType);
+    }
+
+    public static <T extends Object> T read(String src, Class<T> valueType) throws IOException, JsonParseException, JsonMappingException {
+        if (om == null) {
+            initObjectMapper();
+        }
+        return om.readValue(src, valueType);
+    }
+
+    public static <T extends Object> T read(String src, TypeReference<T> valueTypeRef) throws IOException, JsonParseException, JsonMappingException {
+        if (om == null) {
+            initObjectMapper();
+        }
+        return om.readValue(src, valueTypeRef);
+    }
+
+    public static <T extends Object> T read(String src, JavaType javaType) throws IOException, JsonParseException, JsonMappingException {
         if (om == null) {
             initObjectMapper();
         }

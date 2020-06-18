@@ -14,7 +14,7 @@ public class Misc {
         return Float.parseFloat(new Formatter().format("%.2f", numero).toString().replace(',', '.'));
     }
 
-    public long daysBetween(Date from, Date to) {
+    public static long daysBetween(Date from, Date to) {
         return TimeUnit.DAYS.convert(Math.abs(to.getTime() - from.getTime()), TimeUnit.MILLISECONDS);
     }
 
