@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class Misc {
 
+    public static String toString64(byte[] arr) {
+        return String.format("%1$064x", new java.math.BigInteger(1, arr));
+    }
+
     public static float round2f(double numero) {
         return Float.parseFloat(new Formatter().format("%.2f", numero).toString().replace(',', '.'));
     }
