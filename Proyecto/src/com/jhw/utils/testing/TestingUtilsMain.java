@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testing;
+package com.jhw.utils.testing;
 
-import jackson.JACKSON;
+import com.jhw.utils.jackson.JACKSON;
 import java.io.File;
 import java.io.IOException;
-import testing.jackson.Person;
+import com.jhw.utils.testing.jackson.Person;
 
 /**
  *

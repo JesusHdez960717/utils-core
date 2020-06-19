@@ -24,7 +24,7 @@ hs_err_pid*
 /Proyecto/nbproject/
 /Proyecto/build/
 /Proyecto/dist/
-/Proyecto/src/testing/
+/Proyecto/src/com/jhw/utils/testing/
 Proyecto/build.xml
 /release_library/
 *.mf

@@ -1,4 +1,4 @@
-package jackson.serializer_deserializer.color;
+package com.jhw.utils.jackson.serializer_deserializer.color;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

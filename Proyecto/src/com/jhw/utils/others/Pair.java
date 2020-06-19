@@ -1,4 +1,4 @@
-package others;
+package com.jhw.utils.others;
 
 import java.io.Serializable;
 import lombok.Data;

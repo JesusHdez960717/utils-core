@@ -1,4 +1,4 @@
-package file;
+package com.jhw.utils.file;
 
 import java.io.File;
 import java.io.IOException;
