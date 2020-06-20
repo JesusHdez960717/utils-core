@@ -22,6 +22,9 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
     
-    //file Utils
-    compile group: 'org.apache.commons.io', name: 'commonsIO', version: '2.5.0'
+    //lombok
+    //providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }
