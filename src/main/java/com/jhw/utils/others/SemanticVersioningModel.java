@@ -43,6 +43,38 @@ public class SemanticVersioningModel implements Serializable, Comparable<Semanti
         this.extra = extra;
     }
 
+    public int getMayor() {
+        return mayor;
+    }
+
+    public void setMayor(int mayor) {
+        this.mayor = mayor;
+    }
+
+    public int getMinor() {
+        return minor;
+    }
+
+    public void setMinor(int minor) {
+        this.minor = minor;
+    }
+
+    public int getBug() {
+        return bug;
+    }
+
+    public void setBug(int bug) {
+        this.bug = bug;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
     @Override
     public String toString() {
         return mayor + "." + minor + "." + bug + extra;
