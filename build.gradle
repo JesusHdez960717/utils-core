@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+group = 'com.jhw.utils'
+
+mainClassName = 'com.jhw.utils.Main'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile "commons-codec:commons-codec:1.10:sources"
+    compile "commons-codec:commons-codec:1.10:javadoc"
+    
+    testCompile 'junit:junit:4.12'
+    
+    //Jackson
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+    
+    //lombok
+    //providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+}
