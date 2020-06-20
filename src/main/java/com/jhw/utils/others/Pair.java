@@ -21,4 +21,20 @@ public class Pair<T> implements Serializable {
         this.A = A;
         this.B = B;
     }
+
+    public T getA() {
+        return A;
+    }
+
+    public void setA(T A) {
+        this.A = A;
+    }
+
+    public T getB() {
+        return B;
+    }
+
+    public void setB(T B) {
+        this.B = B;
+    }
 }
