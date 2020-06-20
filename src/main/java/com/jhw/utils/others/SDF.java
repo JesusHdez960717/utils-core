@@ -3,13 +3,13 @@ package com.jhw.utils.others;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import lombok.Data;
+//import lombok.Data;
 
 /**
  *
  * @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
  */
-@Data
+//@Data
 public class SDF {
 
     public static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
