@@ -6,10 +6,16 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
+ * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 public class ExceptionHandlerUtil {
 
+    /**
+     * Add the exception to the file as an exception's arrays
+     * @param f file to save the exception
+     * @param e exception to save
+     * @return true if the exception was saved ok in the file
+     */
     public static boolean saveException(File f, Exception e) {
         try {
             ArrayList<Exception> exc;

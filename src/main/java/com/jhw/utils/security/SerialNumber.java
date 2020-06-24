@@ -8,10 +8,8 @@ import java.io.OutputStream;
 import java.util.Scanner;
 
 /**
- * FirstDream
  *
  * @author Jorge
- *
  */
 public class SerialNumber {
 
@@ -23,6 +21,10 @@ public class SerialNumber {
      * @return MAC Address
      */
     public static byte[] getUID() {
+        return SHA.hash256(getSimpleUID().getBytes());
+    }
+
+    public static String getSimpleUID() {
         String OSName = System.getProperty("os.name");
         String ret = "";
         if (OSName.contains("Windows")) {
@@ -30,14 +32,13 @@ public class SerialNumber {
         } else {
             ret = getMacSerialNo();
         }
-        return SHA.hash256(ret.getBytes());
+        return ret;
     }
 
     //
     // Windows Serial Number
     //
     private static String getWindowsSerialNumber() {
-
         if (sn != null) {
             return sn;
         }

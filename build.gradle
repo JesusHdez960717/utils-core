@@ -1,18 +1,6 @@
-/*buildscript{
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-}*/
-
-plugins{
-    //id 'io.freefair.lombok' version "5.0.1"    
-}
-
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
-apply plugin: 'io.freefair.lombok'
 
 group = 'com.jhw.utils'
 
@@ -33,10 +21,8 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
-    
-    //lombok
-    //providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
 
+    //File utils
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
 }

@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 
 /**
  *
- * @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
+ * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 //@Data
 public class SemanticVersioningModel implements Serializable, Comparable<SemanticVersioningModel> {

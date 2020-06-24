@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  *
- * @author @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
+ * @author @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 public class ColorJsonSerializer extends JsonSerializer<Color> {
 
