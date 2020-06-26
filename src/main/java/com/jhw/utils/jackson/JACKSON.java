@@ -111,4 +111,9 @@ public class JACKSON {
 
         return om.getTypeFactory();
     }
+
+    public static <T> T convert(Object objectToConvert, Class<? extends T> convertToClass) throws Exception {
+        String from = toString(objectToConvert);
+        return read(from, convertToClass);
+    }
 }
