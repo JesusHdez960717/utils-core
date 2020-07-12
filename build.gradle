@@ -1,10 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'application'
+//apply plugin: 'application'
 
 group = 'com.jhw.utils'
 
-mainClassName = 'com.jhw.utils.Main'
+//mainClassName = 'com.jhw.utils.Main'
 
 repositories {
     jcenter()
