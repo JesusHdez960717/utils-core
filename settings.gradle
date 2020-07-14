@@ -1,1 +1,5 @@
 rootProject.name = 'Utils'
+
+include ':clean-core'
+
+project(':clean-core').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\CleanCoreFull" as File

@@ -15,6 +15,9 @@ dependencies {
     compile "commons-codec:commons-codec:1.10:sources"
     compile "commons-codec:commons-codec:1.10:javadoc"
     
+    //para el validation del jpa
+    implementation project(':clean-core')
+    
     testCompile 'junit:junit:4.12'
     
     //Jackson
@@ -25,6 +28,11 @@ dependencies {
     //File utils
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
+    //generar valores aleatorios
     compile group: 'org.fluttercode.datafactory', name: 'datafactory', version: '0.8'
+    
+    //EclipseLink
+    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
 
 }
