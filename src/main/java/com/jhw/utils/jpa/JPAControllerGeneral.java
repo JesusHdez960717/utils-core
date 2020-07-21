@@ -54,12 +54,12 @@ public class JPAControllerGeneral<T> implements Validable {
             //check the id isn't null
             Object id = JPAControllerGeneralUtils.getId(object);
             if (id == null) {
-                throw new NullPointerException("To edit " + object + " the id can't be null");
+                throw new NonExistingEntityException("To edit " + object + " the id can't be null");
             }
             //check if still exist
             T persistedObject = find(id);
             if (persistedObject == null) {
-                throw new NullPointerException(object + " no longer exists.");
+                throw new NonExistingEntityException(object + " no longer exists.");
             }
 
             //edit it
@@ -100,7 +100,7 @@ public class JPAControllerGeneral<T> implements Validable {
                 persistedObject = em.getReference(classType, id);
                 JPAControllerGeneralUtils.getId(persistedObject);
             } catch (Exception e) {
-                throw new NullPointerException(id + " no longer exists.");
+                throw new NonExistingEntityException(id + " no longer exists.");
             }
 
             em.remove(persistedObject);
