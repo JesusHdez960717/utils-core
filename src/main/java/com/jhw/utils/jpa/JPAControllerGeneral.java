@@ -96,10 +96,8 @@ public class JPAControllerGeneral<T> implements Validable {
             em = getEntityManager();
             em.getTransaction().begin();
 
-            try {
-                persistedObject = em.getReference(classType, id);
-                JPAControllerGeneralUtils.getId(persistedObject);
-            } catch (Exception e) {
+            persistedObject = em.find(classType, id);
+            if (persistedObject == null) {
                 throw new NonExistingEntityException(id + " no longer exists.");
             }
 

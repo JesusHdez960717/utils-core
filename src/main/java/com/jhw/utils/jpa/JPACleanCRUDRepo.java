@@ -42,21 +42,24 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     public Domain create(Domain domain) throws Exception {
         Entity entity = JACKSON.convert(domain, entityClass);
         jpaController.create(entity);
-        return JACKSON.convert(entity, domainClass);
+        domain = JACKSON.convert(entity, domainClass);
+        return domain;
     }
 
     @Override
     public Domain edit(Domain domain) throws Exception {
         Entity entity = JACKSON.convert(domain, entityClass);
         jpaController.edit(entity);
-        return JACKSON.convert(entity, domainClass);
+        domain = JACKSON.convert(entity, domainClass);
+        return domain;
     }
 
     @Override
     public Domain destroy(Domain domain) throws Exception {
         Entity entity = JACKSON.convert(domain, entityClass);
         jpaController.destroy(entity);
-        return JACKSON.convert(entity, domainClass);
+        domain = JACKSON.convert(entity, domainClass);
+        return domain;
     }
 
     @Override
