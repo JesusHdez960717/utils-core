@@ -34,11 +34,13 @@ public class AES {
     public static byte[] decipher(byte[] pass, byte[] text) throws Exception {
         cipher = Cipher.getInstance(ALGO);
 
+        byte[] passPadded = SHA.hash256(pass);
+        
         byte sec[] = new byte[16];
-        System.arraycopy(pass, 0, sec, 0, sec.length);//primeros 16  bytes del sha-256 para la clave secreta
+        System.arraycopy(passPadded, 0, sec, 0, sec.length);//primeros 16  bytes del sha-256 para la clave secreta
         secret = new SecretKeySpec(sec, "AES");
 
-        System.arraycopy(pass, 16, iv, 0, iv.length);//ultimos 16  bytes del sha-256 para iv
+        System.arraycopy(passPadded, 16, iv, 0, iv.length);//ultimos 16  bytes del sha-256 para iv
 
         cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(iv));
         return cipher.doFinal(text);
