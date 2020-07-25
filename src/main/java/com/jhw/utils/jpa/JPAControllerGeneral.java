@@ -1,5 +1,6 @@
 package com.jhw.utils.jpa;
 
+import com.clean.core.app.repo.CRUDRepository;
 import com.clean.core.exceptions.ValidationException;
 import com.clean.core.utils.validation.Validable;
 import com.clean.core.utils.validation.ValidationMessage;
@@ -15,7 +16,7 @@ import javax.persistence.criteria.Root;
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
-public class JPAControllerGeneral<T> implements Validable {
+public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
 
     private EntityManagerFactory emf = null;
     private final Class<T> classType;
@@ -30,6 +31,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return emf.createEntityManager();
     }
 
+    @Override
     public T create(T object) throws Exception {
         EntityManager em = null;
         try {
@@ -45,6 +47,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return object;
     }
 
+    @Override
     public T edit(T object) throws Exception {
         EntityManager em = null;
         try {
@@ -57,7 +60,7 @@ public class JPAControllerGeneral<T> implements Validable {
                 throw new NonExistingEntityException("To edit " + object + " the id can't be null");
             }
             //check if still exist
-            T persistedObject = find(id);
+            T persistedObject = findBy(id);
             if (persistedObject == null) {
                 throw new NonExistingEntityException(object + " no longer exists.");
             }
@@ -75,7 +78,8 @@ public class JPAControllerGeneral<T> implements Validable {
         return object;
     }
 
-    public T find(Object id) {
+    @Override
+    public T findBy(Object id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(classType, id);//return null if don't exits
@@ -84,11 +88,13 @@ public class JPAControllerGeneral<T> implements Validable {
         }
     }
 
+    @Override
     public T destroy(T object) throws Exception {
-        return destroyByID(JPAControllerGeneralUtils.getId(object));
+        return destroyById(JPAControllerGeneralUtils.getId(object));
     }
 
-    public T destroyByID(Object id) throws Exception {
+    @Override
+    public T destroyById(Object id) throws Exception {
         EntityManager em = null;
         T persistedObject;
 
@@ -111,6 +117,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return persistedObject;
     }
 
+    @Override
     public List<T> findAll() {
         return findAll(true, -1, -1);
     }
@@ -135,7 +142,8 @@ public class JPAControllerGeneral<T> implements Validable {
         }
     }
 
-    public int getCount() {
+    @Override
+    public int count() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();

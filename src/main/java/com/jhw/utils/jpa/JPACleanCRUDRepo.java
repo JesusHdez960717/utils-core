@@ -64,13 +64,13 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain destroyById(Object keyId) throws Exception {
-        Entity entity = jpaController.destroyByID(keyId);
+        Entity entity = jpaController.destroyById(keyId);
         return JACKSON.convert(entity, domainClass);
     }
 
     @Override
     public Domain findBy(Object keyId) throws Exception {
-        Entity entity = jpaController.find(keyId);
+        Entity entity = jpaController.findBy(keyId);
         return JACKSON.convert(entity, domainClass);
     }
 
@@ -86,6 +86,6 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public int count() throws Exception {
-        return jpaController.getCount();
+        return jpaController.count();
     }
 }
