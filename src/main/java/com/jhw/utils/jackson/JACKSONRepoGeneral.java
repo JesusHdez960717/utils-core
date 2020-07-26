@@ -11,6 +11,7 @@ import java.io.File;
 /**
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
+ * @param <T>
  */
 public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
 
@@ -19,6 +20,9 @@ public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
 
     public JACKSONRepoGeneral(String file, Class clazz) {
         this.file = new File(file);
+        if (this.file.getParentFile() != null) {
+            this.file.getParentFile().mkdirs();
+        }
         this.clazz = clazz;
     }
 
