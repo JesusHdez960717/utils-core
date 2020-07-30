@@ -10,18 +10,15 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.jhw.utils.jackson.serializer_deserializer.color.ColorJsonDeserializer;
-import com.jhw.utils.jackson.serializer_deserializer.color.ColorJsonSerializer;
 import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonDeserializer;
 import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonSerializer;
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
 /**
  *
- * @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
+ * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 public class JACKSON {
 
@@ -86,11 +83,6 @@ public class JACKSON {
     private static void initObjectMapper() {
         om = new ObjectMapper();
 
-        SimpleModule colorModule = new SimpleModule("Color Module");
-        colorModule.addSerializer(Color.class, new ColorJsonSerializer());
-        colorModule.addDeserializer(Color.class, new ColorJsonDeserializer());
-        om.registerModule(colorModule);
-
         SimpleModule dateModule = new SimpleModule("Date Module");
         dateModule.addSerializer(Date.class, new DateJsonSerializer());
         dateModule.addDeserializer(Date.class, new DateJsonDeserializer());
@@ -110,5 +102,10 @@ public class JACKSON {
         }
 
         return om.getTypeFactory();
+    }
+
+    public static <T> T convert(Object objectToConvert, Class<? extends T> convertToClass) throws Exception {
+        String from = toString(objectToConvert);
+        return read(from, convertToClass);
     }
 }

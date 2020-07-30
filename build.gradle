@@ -1,10 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
-apply plugin: 'application'
+//apply plugin: 'application'
 
 group = 'com.jhw.utils'
 
-mainClassName = 'com.jhw.utils.Main'
+//mainClassName = 'com.jhw.utils.Main'
 
 repositories {
     jcenter()
@@ -15,16 +15,24 @@ dependencies {
     compile "commons-codec:commons-codec:1.10:sources"
     compile "commons-codec:commons-codec:1.10:javadoc"
     
+    //para el validation del jpa
+    implementation project(':clean-core')
+    
     testCompile 'junit:junit:4.12'
     
     //Jackson
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
-    
-    //lombok
-    //providedCompile group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
 
+    //File utils
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    //generar valores aleatorios
+    compile group: 'org.fluttercode.datafactory', name: 'datafactory', version: '0.8'
+    
+    //EclipseLink
+    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
 
 }

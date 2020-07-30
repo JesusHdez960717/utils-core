@@ -7,19 +7,22 @@ import java.io.Serializable;
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  * @param <T>
+ * @param <K>
  */
 //@Data
-public class Pair<T> implements Serializable {
+public class Trio<T, K, L> implements Serializable {
 
     private T A;
-    private T B;
+    private K B;
+    private L C;
 
-    public Pair() {
+    public Trio() {
     }
 
-    public Pair(T A, T B) {
+    public Trio(T A, K B, L C) {
         this.A = A;
         this.B = B;
+        this.C = C;
     }
 
     public T getA() {
@@ -30,11 +33,19 @@ public class Pair<T> implements Serializable {
         this.A = A;
     }
 
-    public T getB() {
+    public K getB() {
         return B;
     }
 
-    public void setB(T B) {
+    public void setB(K B) {
         this.B = B;
+    }
+
+    public L getC() {
+        return C;
+    }
+
+    public void setC(L C) {
+        this.C = C;
     }
 }

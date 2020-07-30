@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author @author Jesús Hernández Barrios (jhernandezb96@gmail.com)
+ * @author @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
 public class DateJsonDeserializer extends JsonDeserializer<Date> {
 

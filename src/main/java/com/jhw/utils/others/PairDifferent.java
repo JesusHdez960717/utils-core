@@ -7,17 +7,18 @@ import java.io.Serializable;
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  * @param <T>
+ * @param <K>
  */
 //@Data
-public class Pair<T> implements Serializable {
+public class PairDifferent<T, K> implements Serializable {
 
     private T A;
-    private T B;
+    private K B;
 
-    public Pair() {
+    public PairDifferent() {
     }
 
-    public Pair(T A, T B) {
+    public PairDifferent(T A, K B) {
         this.A = A;
         this.B = B;
     }
@@ -30,11 +31,11 @@ public class Pair<T> implements Serializable {
         this.A = A;
     }
 
-    public T getB() {
+    public K getB() {
         return B;
     }
 
-    public void setB(T B) {
+    public void setB(K B) {
         this.B = B;
     }
 }
