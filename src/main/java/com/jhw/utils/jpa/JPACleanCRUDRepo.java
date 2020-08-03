@@ -76,6 +76,13 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         return JACKSON.convert(entity, domainClass);
     }
 
+    /**
+     * Para hacer el sort por annotation se le hace un reverse a los fields para
+     * darle mayor peso a los primeros.
+     *
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<Domain> findAll() throws Exception {
         List<Entity> list = jpaController.findAll();
@@ -88,7 +95,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
             return answ;
         }
 
-        return Misc.sortByAnnotation(answ, domainClass, annot.fields());
+        return Misc.sortByAnnotation(answ, domainClass, Misc.reverse(annot.fields()));
     }
 
     @Override
