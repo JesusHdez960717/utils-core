@@ -85,17 +85,24 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
      */
     @Override
     public List<Domain> findAll() throws Exception {
-        List<Entity> list = jpaController.findAll();
+        List<Entity> list = jpaController.findAll();//find all entities
+
+        //convert entities to domain
         List<Domain> answ = new ArrayList<>(list.size());
         for (Entity job : list) {
             answ.add(JACKSON.convert(job, domainClass));
         }
-        SortBy annot = domainClass.getDeclaredAnnotation(SortBy.class);
-        if (annot == null) {//si no tiene el annotation no ordeno nada
+
+        //sort domain list acording to SortBy annotation if exists
+        SortBy annot[] = domainClass.getDeclaredAnnotationsByType(SortBy.class);
+        if (annot == null || annot.length == 0) {//si no tiene el annotation no ordeno nada
             return answ;
         }
+        for (SortBy actualAnnotation : Misc.reverse(annot)) {
+            Misc.sortByAnnotation(answ, domainClass, Misc.reverse(actualAnnotation.priority()), actualAnnotation.order());
+        }
 
-        return Misc.sortByAnnotation(answ, domainClass, Misc.reverse(annot.fields()));
+        return answ;
     }
 
     @Override
