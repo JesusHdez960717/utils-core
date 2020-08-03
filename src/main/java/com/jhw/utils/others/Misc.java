@@ -3,6 +3,9 @@ package com.jhw.utils.others;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.concurrent.TimeUnit;
+import java.lang.reflect.Field;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -34,5 +37,29 @@ public class Misc {
                 return b == 0 ? 0 : a / b;
         }
         return 0;
+    }
+
+    public static <T> List<T> sortByAnnotation(List<T> list, Class<T> clazz, String[] fieldsNames) {
+        for (String actualField : fieldsNames) {
+            try {
+                Field field = clazz.getDeclaredField(actualField);//cojo el Field
+
+                boolean oldAccess = field.isAccessible();
+
+                Collections.sort(list, (first, second) -> {
+                    try {
+                        return ((Comparable) field.get(first)).compareTo(field.get(second));
+                    } catch (Exception ex) {
+                        return 0;
+                    }
+                });
+
+                field.setAccessible(oldAccess);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return list;//return the same list
     }
 }
