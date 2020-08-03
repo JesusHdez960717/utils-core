@@ -7,10 +7,12 @@ package com.jhw.utils.jpa;
 
 import com.clean.core.app.repo.CRUDRepository;
 import com.jhw.utils.jackson.JACKSON;
+import com.jhw.utils.others.Misc;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import com.clean.core.utils.SortBy;
 
 /**
  *
@@ -81,7 +83,12 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         for (Entity job : list) {
             answ.add(JACKSON.convert(job, domainClass));
         }
-        return answ;
+        SortBy annot = domainClass.getDeclaredAnnotation(SortBy.class);
+        if (annot == null) {//si no tiene el annotation no ordeno nada
+            return answ;
+        }
+
+        return Misc.sortByAnnotation(answ, domainClass, annot.fields());
     }
 
     @Override
