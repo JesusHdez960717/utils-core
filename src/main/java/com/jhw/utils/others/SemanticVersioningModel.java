@@ -2,13 +2,11 @@ package com.jhw.utils.others;
 
 import java.io.Serializable;
 import java.util.StringTokenizer;
-//import lombok.Data;
 
 /**
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
-//@Data
 public class SemanticVersioningModel implements Serializable, Comparable<SemanticVersioningModel> {
 
     private int mayor;

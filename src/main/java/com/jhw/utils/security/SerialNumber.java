@@ -27,7 +27,7 @@ public class SerialNumber {
     public static String getSimpleUID() {
         String OSName = System.getProperty("os.name");
         String ret = "";
-        if (OSName.contains("Windows")) {
+        if (OSName.toLowerCase().contains("Windows".toLowerCase())) {
             ret = getWindowsSerialNumber();
         } else {
             ret = getMacSerialNo();
@@ -38,12 +38,11 @@ public class SerialNumber {
     //
     // Windows Serial Number
     //
-    private static String getWindowsSerialNumber() {
+    public static String getWindowsSerialNumber() {
         if (sn != null) {
             return sn;
         }
 
-        OutputStream os = null;
         InputStream is = null;
 
         Runtime runtime = Runtime.getRuntime();
@@ -54,14 +53,7 @@ public class SerialNumber {
             throw new RuntimeException(e);
         }
 
-        os = process.getOutputStream();
         is = process.getInputStream();
-
-        try {
-            os.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         Scanner sc = new Scanner(is);
         try {
@@ -90,13 +82,11 @@ public class SerialNumber {
     //
     // Mac Serial Number
     //
-    private static String getMacSerialNo() {
-
+    public static String getMacSerialNo() {
         if (sn != null) {
             return sn;
         }
 
-        OutputStream os = null;
         InputStream is = null;
 
         Runtime runtime = Runtime.getRuntime();
@@ -107,14 +97,7 @@ public class SerialNumber {
             throw new RuntimeException(e);
         }
 
-        os = process.getOutputStream();
         is = process.getInputStream();
-
-        try {
-            os.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line = null;
@@ -126,12 +109,12 @@ public class SerialNumber {
                     break;
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             try {
                 is.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
@@ -146,7 +129,7 @@ public class SerialNumber {
     //
     // Linux Get Serial Number
     //
-    private static String getLinuxSerialNumber() {
+    public static String getLinuxSerialNumber() {
 
         if (sn == null) {
             readDmidecode();
@@ -187,7 +170,6 @@ public class SerialNumber {
     }
 
     private static void readDmidecode() {
-
         String line = null;
         String marker = "Serial Number:";
         BufferedReader br = null;
@@ -195,7 +177,7 @@ public class SerialNumber {
         try {
             br = read("dmidecode -t system");
             while ((line = br.readLine()) != null) {
-                if (line.indexOf(marker) != -1) {
+                if (line.contains(marker)) {
                     sn = line.split(marker)[1].trim();
                     break;
                 }
