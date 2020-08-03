@@ -40,25 +40,23 @@ public class Misc {
     }
 
     public static <T> List<T> sortByAnnotation(List<T> list, Class<T> clazz, String[] fieldsNames) {
-        for (String actualField : fieldsNames) {
-            try {
+        try {
+            for (String actualField : fieldsNames) {
                 Field field = clazz.getDeclaredField(actualField);//cojo el Field
 
-                boolean oldAccess = field.isAccessible();
+                field.setAccessible(true);
 
                 Collections.sort(list, (first, second) -> {
                     try {
                         return ((Comparable) field.get(first)).compareTo(field.get(second));
                     } catch (Exception ex) {
+                        ex.printStackTrace();
                         return 0;
                     }
                 });
-
-                field.setAccessible(oldAccess);
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return list;//return the same list
     }
