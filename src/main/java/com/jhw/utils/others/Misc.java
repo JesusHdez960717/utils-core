@@ -1,9 +1,11 @@
 package com.jhw.utils.others;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.concurrent.TimeUnit;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,5 +61,13 @@ public class Misc {
             ex.printStackTrace();
         }
         return list;//return the same list
+    }
+
+    public static <T> T[] reverse(T arr[]) {
+        T[] answ = (T[]) Array.newInstance(arr.getClass().getComponentType(), arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            answ[i] = arr[arr.length - 1 - i];
+        }
+        return answ;
     }
 }
