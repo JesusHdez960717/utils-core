@@ -41,16 +41,16 @@ public class Misc {
         return 0;
     }
 
-    public static <T> List<T> sortByAnnotation(List<T> list, Class<T> clazz, String[] fieldsNames) {
+    public static <T> List<T> sortByAnnotation(List<T> list, Class<T> clazz, String[] fieldsNames, int order) {
         try {
             for (String actualField : fieldsNames) {
-                Field field = clazz.getDeclaredField(actualField);//cojo el Field
+                Field field = clazz.getDeclaredField(actualField);//cojo el Field 
 
                 field.setAccessible(true);
 
                 Collections.sort(list, (first, second) -> {
                     try {
-                        return ((Comparable) field.get(first)).compareTo(field.get(second));
+                        return order * ((Comparable) field.get(first)).compareTo(field.get(second));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                         return 0;
@@ -60,7 +60,7 @@ public class Misc {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return list;//return the same list
+        return list;//return the same list 
     }
 
     public static <T> T[] reverse(T arr[]) {
