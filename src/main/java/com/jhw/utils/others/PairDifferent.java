@@ -1,7 +1,6 @@
 package com.jhw.utils.others;
 
 import java.io.Serializable;
-//import lombok.Data;
 
 /**
  *
@@ -9,7 +8,6 @@ import java.io.Serializable;
  * @param <T>
  * @param <K>
  */
-//@Data
 public class PairDifferent<T, K> implements Serializable {
 
     private T A;

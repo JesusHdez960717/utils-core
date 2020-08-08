@@ -1,14 +1,12 @@
 package com.jhw.utils.others;
 
 import java.io.Serializable;
-//import lombok.Data;
 
 /**
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  * @param <T>
  */
-//@Data
 public class Pair<T> implements Serializable {
 
     private T A;

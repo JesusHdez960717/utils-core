@@ -14,7 +14,9 @@ import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonDeserializer;
 import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonSerializer;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -107,5 +109,14 @@ public class JACKSON {
     public static <T> T convert(Object objectToConvert, Class<? extends T> convertToClass) throws Exception {
         String from = toString(objectToConvert);
         return read(from, convertToClass);
+    }
+
+    public static <T> List<T> convert(List list, Class<? extends T> convertToClass) throws Exception {
+        //convert entities to domain
+        List<T> answ = new ArrayList<>(list.size());
+        for (Object obj : list) {
+            answ.add(JACKSON.convert(obj, convertToClass));
+        }
+        return answ;
     }
 }
