@@ -5,6 +5,8 @@
  */
 package com.jhw.utils.others;
 
+import com.jhw.utils.interfaces.Filtrable;
+import com.jhw.utils.interfaces.Formateable;
 import java.lang.reflect.Field;
 
 /**
@@ -18,7 +20,19 @@ public class FiltrableRefraction {
             Class c = obj.getClass();
             for (Field f : c.getDeclaredFields()) {
                 f.setAccessible(true);
-                if (f.get(obj).toString().toLowerCase().contains(text.toLowerCase())) {
+                Object value = f.get(obj);
+                if (value == null) {
+                    continue;
+                }
+                if (value instanceof Filtrable) {
+                    if (((Filtrable) value).test(text)) {
+                        return true;
+                    }
+                } else if (value instanceof Formateable) {
+                    if (((Formateable) value).format().toLowerCase().contains(text.toLowerCase())) {
+                        return true;
+                    }
+                } else if (value.toString().toLowerCase().contains(text.toLowerCase())) {
                     return true;
                 }
             }
