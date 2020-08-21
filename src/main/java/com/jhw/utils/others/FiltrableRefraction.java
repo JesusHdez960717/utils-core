@@ -40,4 +40,25 @@ public class FiltrableRefraction {
         }
         return false;
     }
+
+    public static String toFullString(Object obj) {
+        String full = "";
+        try {
+            Class c = obj.getClass();
+            for (Field f : c.getDeclaredFields()) {
+                f.setAccessible(true);
+                Object value = f.get(obj);
+                if (value == null) {
+                    continue;
+                }
+                if (value instanceof Formateable) {
+                    full += ((Formateable) value).format();
+                }
+                full += value.toString();
+            }
+        } catch (Exception e) {
+        }
+        full.toLowerCase();
+        return full;
+    }
 }
