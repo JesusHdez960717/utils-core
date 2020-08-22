@@ -9,7 +9,7 @@ import com.clean.core.domain.EntityDomainObject;
 import com.clean.core.exceptions.ValidationException;
 import com.clean.core.utils.validation.ValidationResult;
 import com.jhw.utils.interfaces.Filtrable;
-import com.jhw.utils.others.FiltrableRefraction;
+import com.jhw.utils.refraction.FiltrableRefraction;
 
 /**
  *

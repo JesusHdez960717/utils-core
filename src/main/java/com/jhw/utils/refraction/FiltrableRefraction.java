@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.utils.others;
+package com.jhw.utils.refraction;
 
 import com.jhw.utils.interfaces.Filtrable;
 import com.jhw.utils.interfaces.Formateable;
@@ -15,6 +15,14 @@ import java.lang.reflect.Field;
  */
 public class FiltrableRefraction {
 
+    /**
+     * Test a contain of the String text over T obj
+     *
+     * @param <T>
+     * @param obj
+     * @param text
+     * @return
+     */
     public static <T> boolean test(T obj, String text) {
         try {
             Class c = obj.getClass();
@@ -58,7 +66,6 @@ public class FiltrableRefraction {
             }
         } catch (Exception e) {
         }
-        full.toLowerCase();
-        return full;
+        return full.toLowerCase();
     }
 }
