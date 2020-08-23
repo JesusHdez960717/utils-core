@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import com.clean.core.utils.SortBy;
 import com.clean.core.utils.validation.Validable;
 import com.clean.core.utils.validation.ValidationResult;
+import java.util.Collections;
 
 /**
  *
@@ -134,7 +135,14 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         for (Entity job : list) {
             answ.add(JACKSON.convert(job, domainClass));
         }
-
+        
+        //compara por el comparable si lo implementa
+        if (Comparable.class.isAssignableFrom(domainClass)) {
+            Collections.sort(answ, (g1, g2) -> {
+                return ((Comparable) g1).compareTo(g2);
+            });
+        }
+        
         //sort domain list acording to SortBy annotation if exists
         SortBy annot[] = domainClass.getDeclaredAnnotationsByType(SortBy.class);
         if (annot == null || annot.length == 0) {//si no tiene el annotation no ordeno nada
