@@ -1,5 +1,7 @@
 package com.jhw.utils.others;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Formatter;
 import java.util.StringTokenizer;
 
@@ -12,7 +14,7 @@ import java.util.StringTokenizer;
  */
 public class StringFormating {
 
-    public static String formatToMoney(double number, String moneda) {
+    public static String formatToMoney(BigDecimal number, String moneda) {
         return "$ " + formatToMoney(number) + " " + moneda;
     }
 
@@ -20,46 +22,21 @@ public class StringFormating {
         if (number.trim().isEmpty()) {
             number = "0";
         }
-        return formatToMoney(Double.parseDouble(number));
+        return formatToMoney(new BigDecimal(number));
     }
 
-    public static String formatToMoney(double number) {
-        //redondear a dos lugares
-        float round = Float.parseFloat(new Formatter().format("%.2f", number).toString().replace(',', '.'));
-        String text = round + "";
+    public static String formatToMoney(BigDecimal number) {
+        BigDecimal rounded = number.setScale(2, RoundingMode.HALF_EVEN);//round to 2places
 
-        StringTokenizer l = new StringTokenizer(text, ".");
+        StringTokenizer str = new StringTokenizer(rounded.toString(), ".");
+        String integerPart = str.nextToken();
 
-        String real = l.nextToken();
-        String decimal = l.nextToken();
+        String reverse = new StringBuilder(integerPart).reverse().toString();
+        String split = reverse.replaceAll("...", "$0 ").trim();
+        String integerFix = new StringBuilder(split).reverse().toString();
 
-        String resp = formatToMoney(Long.parseLong(real)) + "." + decimal;
-        return resp.trim();
+        String answ = integerFix + "." + str.nextToken();
+        return answ;
     }
 
-    public static String formatToMoney(long number) {
-        String resp = "";
-        String real = number + "";
-        String realBack = reverse(real);
-        int spaces = realBack.length() / 3;
-        for (int i = 0; i < spaces; i++) {
-            for (int j = 0; j < 3; j++) {
-                resp += realBack.charAt(i * 3 + j);
-            }
-            resp += " ";
-        }
-        for (int i = 3 * spaces; i < realBack.length(); i++) {
-            resp += realBack.charAt(i);
-        }
-
-        return reverse(resp);
-    }
-
-    private static String reverse(String real) {
-        String realBack = "";
-        for (int i = 0; i < real.length(); i++) {
-            realBack += real.charAt(real.length() - 1 - i);
-        }
-        return realBack;
-    }
 }
