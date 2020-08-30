@@ -160,7 +160,7 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
     public ValidationResult validate() throws ValidationException {
         ValidationResult val = new ValidationResult();
         if (!JPAControllerGeneralUtils.isEntity(classType)) {
-            val.add(ValidationMessage.from(this, classType + "isn't an javax.persistence.Entity"));
+            val.add(ValidationMessage.from("classType", classType, classType + "isn't an javax.persistence.Entity"));
         }
         return val.throwException();
     }

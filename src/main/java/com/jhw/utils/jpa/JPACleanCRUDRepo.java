@@ -15,8 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import com.clean.core.utils.SortBy;
 import com.clean.core.utils.validation.Validable;
 import com.clean.core.utils.validation.ValidationResult;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.Collections;
 
 /**
  *
@@ -35,24 +34,6 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     public static final String PROP_FIND_BY = "findBy";
 
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
-
-    /**
-     * Add PropertyChangeListener.
-     *
-     * @param listener
-     */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * Remove PropertyChangeListener.
-     *
-     * @param listener
-     */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
 
     private final JPAControllerGeneral<Entity> jpaController;
     private final Class<Domain> domainClass;
@@ -154,7 +135,14 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         for (Entity job : list) {
             answ.add(JACKSON.convert(job, domainClass));
         }
-
+        
+        //compara por el comparable si lo implementa
+        if (Comparable.class.isAssignableFrom(domainClass)) {
+            Collections.sort(answ, (g1, g2) -> {
+                return ((Comparable) g1).compareTo(g2);
+            });
+        }
+        
         //sort domain list acording to SortBy annotation if exists
         SortBy annot[] = domainClass.getDeclaredAnnotationsByType(SortBy.class);
         if (annot == null || annot.length == 0) {//si no tiene el annotation no ordeno nada
@@ -165,16 +153,16 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         }
 
         firePropertyChange(PROP_FIND_BY, null, answ);
-        
+
         return answ;
     }
 
     @Override
     public int count() throws Exception {
         int count = jpaController.count();
-        
+
         firePropertyChange(PROP_COUNT, 0, count);
-        
+
         return count;
     }
 
@@ -186,6 +174,25 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         if (domain instanceof Validable) {
             return ((Validable) domain).validate().throwException();
         }
-        throw new NullPointerException();
+        return new ValidationResult();
     }
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
 }
