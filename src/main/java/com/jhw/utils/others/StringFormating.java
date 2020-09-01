@@ -35,7 +35,7 @@ public class StringFormating {
         String split = reverse.replaceAll("...", "$0 ").trim();
         String integerFix = new StringBuilder(split).reverse().toString();
 
-        String answ = integerFix + "." + str.nextToken();
+        String answ = integerFix + "." + str.nextToken().replaceAll("...", "$0 ").trim();
         return answ;
     }
 
