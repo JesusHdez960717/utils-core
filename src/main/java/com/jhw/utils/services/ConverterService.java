@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jhw.utils.jpa;
+package com.jhw.utils.services;
 
 import com.jhw.utils.jackson.JACKSON;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  *
@@ -22,4 +24,11 @@ public class ConverterService {
         return JACKSON.convert(list, convertToClass);
     }
 
+    public static <T> List<Object[]> convert(List<T> values, Function<T, Object[]> converterFunction) {
+        List<Object[]> answ = new ArrayList<>(values.size());
+        for (T value : values) {
+            answ.add(converterFunction.apply(value));
+        }
+        return answ;
+    }
 }
