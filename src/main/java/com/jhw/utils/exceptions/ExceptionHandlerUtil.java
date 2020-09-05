@@ -17,7 +17,7 @@ public class ExceptionHandlerUtil {
      * @param e exception to save
      * @return true if the exception was saved ok in the file
      */
-    public static boolean saveException(File f, Exception e) {
+    public static boolean saveException(File f, Throwable e) {
         try {
             File folder = new File(f.getPath() + File.separator);
             folder.mkdirs();
@@ -36,11 +36,11 @@ public class ExceptionHandlerUtil {
      * @param e exception to save
      * @return true if the exception was saved ok in the file
      */
-    public static boolean saveExceptionSingleFile(File f, Exception e) {
+    public static boolean saveExceptionSingleFile(File f, Throwable e) {
         try {
-            ArrayList<Exception> exc;
+            ArrayList<Throwable> exc;
             try {
-                exc = JACKSON.read(f, JACKSON.getTypeFactory().constructCollectionType(ArrayList.class, Exception.class));
+                exc = JACKSON.read(f, JACKSON.getTypeFactory().constructCollectionType(ArrayList.class, Throwable.class));
             } catch (Exception exception) {
                 exc = new ArrayList<>();
             }
