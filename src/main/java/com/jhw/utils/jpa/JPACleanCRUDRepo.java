@@ -6,15 +6,13 @@
 package com.jhw.utils.jpa;
 
 import com.clean.core.app.repo.CRUDRepository;
-import com.jhw.utils.jackson.JACKSON;
 import com.jhw.utils.others.Misc;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import com.clean.core.utils.SortBy;
-import com.clean.core.utils.validation.Validable;
-import com.clean.core.utils.validation.ValidationResult;
+import com.jhw.utils.services.ConverterService;
 import java.util.Collections;
 
 /**
@@ -24,14 +22,6 @@ import java.util.Collections;
  * @param <Entity>
  */
 public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> {
-
-    public static final String PROP_COUNT = "count";
-    public static final String PROP_CREATE = "create";
-    public static final String PROP_DESTROY = "destroy";
-    public static final String PROP_DESTROY_BY_ID = "destroyById";
-    public static final String PROP_EDIT = "edit";
-    public static final String PROP_FIND_ALL = "findAll";
-    public static final String PROP_FIND_BY = "findBy";
 
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
@@ -55,46 +45,33 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain create(Domain domain) throws Exception {
-        validateDomain(domain);
-
-        //copy of the object to the oldValue
-        Domain domainOld = JACKSON.convert(domain, domainClass);
-
-        Entity entity = JACKSON.convert(domain, entityClass);
+        Entity entity = ConverterService.convert(domain, entityClass);
         jpaController.create(entity);
-        domain = JACKSON.convert(entity, domainClass);
+        domain = ConverterService.convert(entity, domainClass);
 
-        firePropertyChange(PROP_CREATE, domainOld, domain);
+        firePropertyChange("create", null, domain);
 
         return domain;
     }
 
     @Override
     public Domain edit(Domain domain) throws Exception {
-        validateDomain(domain);
-
-        //copy of the object to the oldValue
-        Domain domainOld = JACKSON.convert(domain, domainClass);
-
-        Entity entity = JACKSON.convert(domain, entityClass);
+        Entity entity = ConverterService.convert(domain, entityClass);
         jpaController.edit(entity);
-        domain = JACKSON.convert(entity, domainClass);
+        domain = ConverterService.convert(entity, domainClass);
 
-        firePropertyChange(PROP_EDIT, domainOld, domain);
+        firePropertyChange("edit", null, domain);
 
         return domain;
     }
 
     @Override
     public Domain destroy(Domain domain) throws Exception {
-        //copy of the object to the oldValue
-        Domain domainOld = JACKSON.convert(domain, domainClass);
-
-        Entity entity = JACKSON.convert(domain, entityClass);
+        Entity entity = ConverterService.convert(domain, entityClass);
         jpaController.destroy(entity);
-        domain = JACKSON.convert(entity, domainClass);
+        domain = ConverterService.convert(entity, domainClass);
 
-        firePropertyChange(PROP_DESTROY, domainOld, domain);
+        firePropertyChange("destroy", null, domain);
 
         return domain;
     }
@@ -102,9 +79,9 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain destroyById(Object keyId) throws Exception {
         Entity entity = jpaController.destroyById(keyId);
-        Domain domain = JACKSON.convert(entity, domainClass);
+        Domain domain = ConverterService.convert(entity, domainClass);
 
-        firePropertyChange(PROP_DESTROY_BY_ID, keyId, domain);
+        firePropertyChange("destroyById", null, domain);
 
         return domain;
     }
@@ -112,9 +89,9 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain findBy(Object keyId) throws Exception {
         Entity entity = jpaController.findBy(keyId);
-        Domain domain = JACKSON.convert(entity, domainClass);
+        Domain domain = ConverterService.convert(entity, domainClass);
 
-        firePropertyChange(PROP_FIND_BY, keyId, domain);
+        firePropertyChange("findBy", null, domain);
 
         return domain;
     }
@@ -133,16 +110,16 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         //convert entities to domain
         List<Domain> answ = new ArrayList<>(list.size());
         for (Entity job : list) {
-            answ.add(JACKSON.convert(job, domainClass));
+            answ.add(ConverterService.convert(job, domainClass));
         }
-        
+
         //compara por el comparable si lo implementa
         if (Comparable.class.isAssignableFrom(domainClass)) {
             Collections.sort(answ, (g1, g2) -> {
                 return ((Comparable) g1).compareTo(g2);
             });
         }
-        
+
         //sort domain list acording to SortBy annotation if exists
         SortBy annot[] = domainClass.getDeclaredAnnotationsByType(SortBy.class);
         if (annot == null || annot.length == 0) {//si no tiene el annotation no ordeno nada
@@ -152,7 +129,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
             Misc.sortByAnnotation(answ, domainClass, Misc.reverse(actualAnnotation.priority()), actualAnnotation.order());
         }
 
-        firePropertyChange(PROP_FIND_BY, null, answ);
+        firePropertyChange("findAll", null, answ);
 
         return answ;
     }
@@ -161,7 +138,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     public int count() throws Exception {
         int count = jpaController.count();
 
-        firePropertyChange(PROP_COUNT, 0, count);
+        firePropertyChange("count", 0, count);
 
         return count;
     }
@@ -170,18 +147,12 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
 
-    private ValidationResult validateDomain(Domain domain) throws Exception {
-        if (domain instanceof Validable) {
-            return ((Validable) domain).validate().throwException();
-        }
-        return new ValidationResult();
-    }
-
     /**
      * Add PropertyChangeListener.
      *
      * @param listener
      */
+    @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }

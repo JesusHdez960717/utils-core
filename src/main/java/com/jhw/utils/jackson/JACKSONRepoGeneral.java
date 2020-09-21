@@ -15,6 +15,8 @@ import java.io.File;
  */
 public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
 
+    private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
+
     private final File file;
     private final Class<T> clazz;
 
@@ -29,7 +31,9 @@ public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
     @Override
     public T read() throws Exception {
         try {
-            return JACKSON.read(file, clazz);
+            T t = JACKSON.read(file, clazz);
+            firePropertyChange("read", null, t);
+            return t;
         } catch (Exception e) {
             T neww = clazz.newInstance();
             try {
@@ -44,6 +48,7 @@ public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
     @Override
     public void write(T object) throws Exception {
         JACKSON.write(file, object);
+        firePropertyChange("write", null, object);
     }
 
     public File getFile() {
@@ -52,4 +57,17 @@ public abstract class JACKSONRepoGeneral<T> implements ReadWriteRepository<T> {
 
     protected abstract void onReadError(Exception e);
 
+    @Override
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+    }
 }

@@ -14,6 +14,10 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
  */
 public class CreditCardFormateer extends AbstractFormatter {
 
+    public static CreditCardFormateer from() {
+        return new CreditCardFormateer();
+    }
+    
     private final String middle = "-";
 
     @Override
