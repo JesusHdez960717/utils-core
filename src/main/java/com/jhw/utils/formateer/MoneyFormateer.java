@@ -17,6 +17,10 @@ import javax.swing.JFormattedTextField.AbstractFormatter;
  */
 public class MoneyFormateer extends AbstractFormatter {
 
+    public static MoneyFormateer from() {
+        return new MoneyFormateer();
+    }
+    
     public static final String MIDDLE = " ";
 
     @Override
@@ -32,7 +36,11 @@ public class MoneyFormateer extends AbstractFormatter {
         if (object == null) {
             return "";
         }
-        String initialString = object.toString().replace(",", ".").replace(MIDDLE, "");
+        String strInit = object.toString();
+        if (strInit.trim().isEmpty()) {
+            return "";
+        }
+        String initialString = strInit.replace(",", ".").replace(MIDDLE, "");
 
         StringTokenizer str = new StringTokenizer(initialString, ".");
         String integerPart = str.nextToken();
