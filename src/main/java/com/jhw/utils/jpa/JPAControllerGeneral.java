@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
  *
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  */
-public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
+public class JPAControllerGeneral<T> implements Validable {
 
     private EntityManagerFactory emf = null;
     private final Class<T> classType;
@@ -31,7 +31,6 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         return emf.createEntityManager();
     }
 
-    @Override
     public T create(T object) throws Exception {
         EntityManager em = null;
         try {
@@ -47,7 +46,6 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         return object;
     }
 
-    @Override
     public T edit(T object) throws Exception {
         EntityManager em = null;
         try {
@@ -78,7 +76,6 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         return object;
     }
 
-    @Override
     public T findBy(Object id) {
         EntityManager em = getEntityManager();
         try {
@@ -88,12 +85,10 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         }
     }
 
-    @Override
     public T destroy(T object) throws Exception {
         return destroyById(JPAControllerGeneralUtils.getId(object));
     }
 
-    @Override
     public T destroyById(Object id) throws Exception {
         EntityManager em = null;
         T persistedObject;
@@ -117,7 +112,6 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         return persistedObject;
     }
 
-    @Override
     public List<T> findAll() {
         return findAll(true, -1, -1);
     }
@@ -142,7 +136,6 @@ public class JPAControllerGeneral<T> implements CRUDRepository<T>, Validable {
         }
     }
 
-    @Override
     public int count() {
         EntityManager em = getEntityManager();
         try {
