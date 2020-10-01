@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import com.clean.core.utils.SortBy;
+import com.clean.core.utils.validation.Validable;
+import com.clean.core.utils.validation.ValidationResult;
 import com.jhw.utils.services.ConverterService;
 import java.util.Collections;
 
@@ -45,6 +47,8 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain create(Domain domain) throws Exception {
+        validateDomain(domain);
+        
         Entity entity = ConverterService.convert(domain, entityClass);
         jpaController.create(entity);
         domain = ConverterService.convert(entity, domainClass);
@@ -56,6 +60,8 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain edit(Domain domain) throws Exception {
+        validateDomain(domain);
+        
         Entity entity = ConverterService.convert(domain, entityClass);
         jpaController.edit(entity);
         domain = ConverterService.convert(entity, domainClass);
@@ -166,4 +172,10 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
+    private ValidationResult validateDomain(Domain domain) throws Exception {
+        if (domain instanceof Validable) {
+            return ((Validable) domain).validate().throwException();
+        }
+        return new ValidationResult();
+    }
 }
