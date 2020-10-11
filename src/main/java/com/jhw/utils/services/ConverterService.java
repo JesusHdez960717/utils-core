@@ -7,7 +7,9 @@ package com.jhw.utils.services;
 
 import com.jhw.utils.jackson.JACKSON;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -30,5 +32,19 @@ public class ConverterService {
             answ.add(converterFunction.apply(value));
         }
         return answ;
+    }
+
+    public static <T> List<Map<String, Object>> convert(String[] names, List<T> values, Function<T, Object[]> converterFunction) {
+        List<Map<String, Object>> m = new ArrayList<>();
+        for (T object : values) {
+            Object objs[] = converterFunction.apply(object);
+
+            Map<String, Object> mAux = new HashMap<>();
+            for (int i = 0; i < objs.length; i++) {
+                mAux.put(names[i], objs[i]);
+            }
+            m.add(mAux);
+        }
+        return m;
     }
 }
