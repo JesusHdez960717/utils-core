@@ -12,8 +12,11 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonDeserializer;
 import com.jhw.utils.jackson.serializer_deserializer.date.DateJsonSerializer;
+import com.jhw.utils.jackson.serializer_deserializer.local_date.LocalDateJsonDeserializer;
+import com.jhw.utils.jackson.serializer_deserializer.local_date.LocalDateJsonSerializer;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +92,11 @@ public class JACKSON {
         dateModule.addSerializer(Date.class, new DateJsonSerializer());
         dateModule.addDeserializer(Date.class, new DateJsonDeserializer());
         om.registerModule(dateModule);
+
+        SimpleModule localDateModule = new SimpleModule("Local Date Module");
+        localDateModule.addSerializer(LocalDate.class, new LocalDateJsonSerializer());
+        localDateModule.addDeserializer(LocalDate.class, new LocalDateJsonDeserializer());
+        om.registerModule(localDateModule);
     }
 
     public static void registerModule(Module module) {
