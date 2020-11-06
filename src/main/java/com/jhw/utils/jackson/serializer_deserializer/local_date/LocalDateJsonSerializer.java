@@ -13,7 +13,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class LocalDateJsonSerializer extends JsonSerializer<LocalDate> {
 
-    public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    //Formato por defecto, si se cambia a otro da error
+    public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 
     @Override
     public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
