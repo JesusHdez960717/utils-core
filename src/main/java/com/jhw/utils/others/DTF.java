@@ -5,7 +5,10 @@
  */
 package com.jhw.utils.others;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * DateTimeFormatter
@@ -16,4 +19,11 @@ public class DTF {
 
     public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
+    public static final LocalDate convert(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static final Date convert(LocalDate date) {
+        return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
 }
