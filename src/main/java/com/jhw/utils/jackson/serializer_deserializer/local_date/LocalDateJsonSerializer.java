@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -12,13 +13,10 @@ import java.time.LocalDate;
  */
 public class LocalDateJsonSerializer extends JsonSerializer<LocalDate> {
 
+    public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
     @Override
     public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-        gen.writeStartObject();
-
-        gen.writeFieldName("date");
-        gen.writeString(value.toString());
-
-        gen.writeEndObject();
+        gen.writeString(LOCAL_DATE_FORMATTER.format(value));
     }
 }
