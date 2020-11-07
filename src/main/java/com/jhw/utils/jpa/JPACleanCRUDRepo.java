@@ -149,7 +149,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         return count;
     }
 
-    private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
 
@@ -168,6 +168,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
      *
      * @param listener
      */
+    @Override
     public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
