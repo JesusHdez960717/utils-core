@@ -4,6 +4,8 @@ plugins {
 
 group = 'com.jhw.utils'
 
+version = '2.5.0.SNAPSHOT.20201106'
+
 repositories {
     jcenter()
     mavenCentral()
