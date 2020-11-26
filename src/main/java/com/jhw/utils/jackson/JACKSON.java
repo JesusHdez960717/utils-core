@@ -41,7 +41,7 @@ public class JACKSON {
         om.registerModule(localDateModule);
     }
 
-    private static ObjectMapper om() {
+    public static ObjectMapper om() {
         if (om == null) {
             om = new ObjectMapper();
             configureObjectMapper(om);
