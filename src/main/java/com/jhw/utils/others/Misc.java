@@ -1,10 +1,10 @@
 package com.jhw.utils.others;
 
 import java.lang.reflect.Array;
-import java.util.Date;
 import java.util.Formatter;
-import java.util.concurrent.TimeUnit;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,8 +22,8 @@ public class Misc {
         return Float.parseFloat(new Formatter().format("%.2f", numero).toString().replace(',', '.'));
     }
 
-    public static long daysBetween(Date from, Date to) {
-        return TimeUnit.DAYS.convert(Math.abs(to.getTime() - from.getTime()), TimeUnit.MILLISECONDS);
+    public static long daysBetween(LocalDate from, LocalDate to) {
+        return ChronoUnit.DAYS.between(from, to);
     }
 
     public static float evaluate(float a, String op, float b) {

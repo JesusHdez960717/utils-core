@@ -6,8 +6,8 @@
 package com.jhw.utils.jpa;
 
 import com.clean.core.app.repo.CRUDRepository;
+import com.clean.core.app.repo.Converter;
 import com.jhw.utils.others.Misc;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,6 +31,29 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     private final Class<Domain> domainClass;
     private final Class<Entity> entityClass;
 
+    /**
+     * Converter por defecto, conversion por el servicio generalizado via JSON
+     */
+    protected Converter<Domain, Entity> converter = new Converter<Domain, Entity>() {
+        @Override
+        public Domain from(Entity entity) throws Exception {
+            return ConverterService.convert(entity, domainClass);
+        }
+
+        @Override
+        public Entity to(Domain domain) throws Exception {
+            return ConverterService.convert(domain, entityClass);
+        }
+    };
+
+    public Converter<Domain, Entity> getConverter() {
+        return converter;
+    }
+
+    public void setConverter(Converter<Domain, Entity> converter) {
+        this.converter = converter;
+    }
+
     public JPACleanCRUDRepo(EntityManagerFactory emf, Class<Domain> domainClass, Class<Entity> entityClass) {
         this.domainClass = domainClass;
         this.entityClass = entityClass;
@@ -48,10 +71,10 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain create(Domain domain) throws Exception {
         validateDomain(domain);
-        
-        Entity entity = ConverterService.convert(domain, entityClass);
+
+        Entity entity = converter.to(domain);
         jpaController.create(entity);
-        domain = ConverterService.convert(entity, domainClass);
+        domain = converter.from(entity);
 
         firePropertyChange("create", null, domain);
 
@@ -61,10 +84,10 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain edit(Domain domain) throws Exception {
         validateDomain(domain);
-        
-        Entity entity = ConverterService.convert(domain, entityClass);
+
+        Entity entity = converter.to(domain);
         jpaController.edit(entity);
-        domain = ConverterService.convert(entity, domainClass);
+        domain = converter.from(entity);
 
         firePropertyChange("edit", null, domain);
 
@@ -73,9 +96,9 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain destroy(Domain domain) throws Exception {
-        Entity entity = ConverterService.convert(domain, entityClass);
+        Entity entity = converter.to(domain);
         jpaController.destroy(entity);
-        domain = ConverterService.convert(entity, domainClass);
+        domain = converter.from(entity);
 
         firePropertyChange("destroy", null, domain);
 
@@ -85,7 +108,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain destroyById(Object keyId) throws Exception {
         Entity entity = jpaController.destroyById(keyId);
-        Domain domain = ConverterService.convert(entity, domainClass);
+        Domain domain = converter.from(entity);
 
         firePropertyChange("destroyById", null, domain);
 
@@ -95,7 +118,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     @Override
     public Domain findBy(Object keyId) throws Exception {
         Entity entity = jpaController.findBy(keyId);
-        Domain domain = ConverterService.convert(entity, domainClass);
+        Domain domain = converter.from(entity);
 
         firePropertyChange("findBy", null, domain);
 
@@ -114,10 +137,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         List<Entity> list = jpaController.findAll();//find all entities
 
         //convert entities to domain
-        List<Domain> answ = new ArrayList<>(list.size());
-        for (Entity job : list) {
-            answ.add(ConverterService.convert(job, domainClass));
-        }
+        List<Domain> answ = converter.from(list);
 
         //compara por el comparable si lo implementa
         if (Comparable.class.isAssignableFrom(domainClass)) {
