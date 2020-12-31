@@ -1,4 +1,4 @@
 rootProject.name = 'utils-core'
 
-include ':clean-core-full'
-project(':clean-core-full').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\clean-core-full" as File
+include ':clean-core'
+project(':clean-core').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\clean-core" as File
