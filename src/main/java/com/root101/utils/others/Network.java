@@ -16,41 +16,37 @@
  */
 package com.root101.utils.others;
 
-import java.io.Serializable;
+import java.net.Socket;
 
 /**
  * 
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <T>
- * @param <K> 
  */
-public class PairDifferent<T, K> implements Serializable {
+public class Network {
 
-    private T A;
-    private K B;
-
-    public PairDifferent() {
-    }
-
-    public PairDifferent(T A, K B) {
-        this.A = A;
-        this.B = B;
-    }
-
-    public T getA() {
-        return A;
-    }
-
-    public void setA(T A) {
-        this.A = A;
-    }
-
-    public K getB() {
-        return B;
-    }
-
-    public void setB(K B) {
-        this.B = B;
+    /**
+     * Check if some service is running in //ip:port
+     *
+     * @param ip
+     * @param port
+     * @return
+     */
+    public static boolean isRunning(String ip, int port) {
+        Socket socket = null;
+        try {
+            socket = new Socket(ip, port);
+            return true;//socket.isConnected();
+        } catch (Exception e) {
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                    socket = null;
+                } catch (Exception e) {
+                }
+            }
+        }
+        return false;
     }
 }
