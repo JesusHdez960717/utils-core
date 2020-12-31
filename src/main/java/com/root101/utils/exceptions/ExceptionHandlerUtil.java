@@ -1,6 +1,6 @@
 package com.root101.utils.exceptions;
 
-import com.root101.utils.jackson.JACKSON;
+import com.root101.json.jackson.JACKSON;
 import java.io.File;
 import java.util.ArrayList;
 

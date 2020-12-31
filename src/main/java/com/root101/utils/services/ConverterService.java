@@ -5,7 +5,7 @@
  */
 package com.root101.utils.services;
 
-import com.root101.utils.jackson.JACKSON;
+import com.root101.json.jackson.JACKSON;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

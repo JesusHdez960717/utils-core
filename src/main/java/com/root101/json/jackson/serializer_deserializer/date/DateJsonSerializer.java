@@ -1,4 +1,4 @@
-package com.root101.utils.jackson.serializer_deserializer.date;
+package com.root101.json.jackson.serializer_deserializer.date;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

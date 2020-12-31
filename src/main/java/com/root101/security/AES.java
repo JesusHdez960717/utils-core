@@ -1,4 +1,4 @@
-package com.root101.utils.security;
+package com.root101.security;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

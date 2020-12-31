@@ -1,4 +1,4 @@
-package com.root101.utils.jackson;
+package com.root101.json.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -10,10 +10,10 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.root101.utils.jackson.serializer_deserializer.date.DateJsonDeserializer;
-import com.root101.utils.jackson.serializer_deserializer.date.DateJsonSerializer;
-import com.root101.utils.jackson.serializer_deserializer.local_date.LocalDateJsonDeserializer;
-import com.root101.utils.jackson.serializer_deserializer.local_date.LocalDateJsonSerializer;
+import com.root101.json.jackson.serializer_deserializer.date.DateJsonDeserializer;
+import com.root101.json.jackson.serializer_deserializer.date.DateJsonSerializer;
+import com.root101.json.jackson.serializer_deserializer.local_date.LocalDateJsonDeserializer;
+import com.root101.json.jackson.serializer_deserializer.local_date.LocalDateJsonSerializer;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
