@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(':clean-core-full')
+    implementation project(':clean-core')
     
     testCompile 'junit:junit:4.13'
     

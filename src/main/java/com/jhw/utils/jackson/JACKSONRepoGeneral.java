@@ -5,9 +5,9 @@
  */
 package com.jhw.utils.jackson;
 
-import com.clean.core.app.repo.ReadWriteRepository;
-import com.clean.core.utils.validation.Validable;
-import com.clean.core.utils.validation.ValidationResult;
+import com.root101.clean.core.app.repo.ReadWriteRepository;
+import com.root101.clean.core.utils.validation.Validable;
+import com.root101.clean.core.utils.validation.ValidationResult;
 import java.io.File;
 
 /**

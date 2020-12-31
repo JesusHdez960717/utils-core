@@ -5,9 +5,9 @@
  */
 package com.jhw.utils.clean;
 
-import com.clean.core.domain.EntityDomainObject;
-import com.clean.core.exceptions.ValidationException;
-import com.clean.core.utils.validation.ValidationResult;
+import com.root101.clean.core.domain.EntityDomainObject;
+import com.root101.clean.core.exceptions.ValidationException;
+import com.root101.clean.core.utils.validation.ValidationResult;
 import com.jhw.utils.interfaces.Filtrable;
 import com.jhw.utils.refraction.FiltrableRefraction;
 

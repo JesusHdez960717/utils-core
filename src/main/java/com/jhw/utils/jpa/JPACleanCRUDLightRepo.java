@@ -5,7 +5,7 @@
  */
 package com.jhw.utils.jpa;
 
-import com.clean.core.app.repo.CRUDLightweightRepo;
+import com.root101.clean.core.app.repo.CRUDLightweightRepo;
 import javax.persistence.EntityManagerFactory;
 
 /**

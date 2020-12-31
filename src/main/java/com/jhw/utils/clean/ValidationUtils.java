@@ -5,7 +5,7 @@
  */
 package com.jhw.utils.clean;
 
-import com.clean.core.utils.validation.ValidationResult;
+import com.root101.clean.core.utils.validation.ValidationResult;
 
 /**
  *

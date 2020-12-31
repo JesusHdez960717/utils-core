@@ -1,10 +1,10 @@
 package com.jhw.utils.jpa;
 
-import com.clean.core.app.repo.CRUDRepository;
-import com.clean.core.exceptions.ValidationException;
-import com.clean.core.utils.validation.Validable;
-import com.clean.core.utils.validation.ValidationMessage;
-import com.clean.core.utils.validation.ValidationResult;
+import com.root101.clean.core.app.repo.CRUDRepository;
+import com.root101.clean.core.exceptions.ValidationException;
+import com.root101.clean.core.utils.validation.Validable;
+import com.root101.clean.core.utils.validation.ValidationMessage;
+import com.root101.clean.core.utils.validation.ValidationResult;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

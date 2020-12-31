@@ -5,15 +5,15 @@
  */
 package com.jhw.utils.jpa;
 
-import com.clean.core.app.repo.CRUDRepository;
-import com.clean.core.app.repo.Converter;
+import com.root101.clean.core.app.repo.CRUDRepository;
+import com.root101.clean.core.app.repo.Converter;
 import com.jhw.utils.others.Misc;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import com.clean.core.utils.SortBy;
-import com.clean.core.utils.validation.Validable;
-import com.clean.core.utils.validation.ValidationResult;
+import com.root101.clean.core.utils.SortBy;
+import com.root101.clean.core.utils.validation.Validable;
+import com.root101.clean.core.utils.validation.ValidationResult;
 import com.jhw.utils.services.ConverterService;
 import java.util.Collections;
 
