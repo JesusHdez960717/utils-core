@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.root101.json.jackson;
+package com.root101.repo.json;
 
 import com.root101.clean.core.app.repo.ReadWriteRepository;
 import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationResult;
+import com.root101.json.jackson.JACKSON;
 import java.io.File;
 
 /**
