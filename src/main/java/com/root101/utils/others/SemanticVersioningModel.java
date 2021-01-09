@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.StringTokenizer;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */

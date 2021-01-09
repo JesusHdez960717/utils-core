@@ -20,7 +20,7 @@ import java.text.ParseException;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
@@ -29,7 +29,7 @@ public class CreditCardFormateer extends AbstractFormatter {
     public static CreditCardFormateer from() {
         return new CreditCardFormateer();
     }
-    
+
     private final String middle = "-";
 
     @Override

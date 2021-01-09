@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
@@ -30,7 +30,7 @@ public class MoneyFormateer extends AbstractFormatter {
     public static MoneyFormateer from() {
         return new MoneyFormateer();
     }
-    
+
     public static final String MIDDLE = " ";
 
     @Override
