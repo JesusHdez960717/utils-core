@@ -19,7 +19,7 @@ package com.root101.utils.others;
 import java.net.Socket;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */

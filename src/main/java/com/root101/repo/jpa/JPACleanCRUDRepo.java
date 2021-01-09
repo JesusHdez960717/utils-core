@@ -29,11 +29,11 @@ import com.root101.utils.services.ConverterService;
 import java.util.Collections;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  * @param <Domain>
- * @param <Entity> 
+ * @param <Entity>
  */
 public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> {
 

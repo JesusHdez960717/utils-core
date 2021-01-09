@@ -22,7 +22,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
@@ -37,7 +37,7 @@ public class AES {
         cipher = Cipher.getInstance(ALGO);
 
         byte[] passPadded = SHA.hash256(pass);
-        
+
         byte sec[] = new byte[16];
         System.arraycopy(passPadded, 0, sec, 0, sec.length);//primeros 16  bytes del sha-256 para la clave secreta
         secret = new SecretKeySpec(sec, "AES");
@@ -52,7 +52,7 @@ public class AES {
         cipher = Cipher.getInstance(ALGO);
 
         byte[] passPadded = SHA.hash256(pass);
-        
+
         byte sec[] = new byte[16];
         System.arraycopy(passPadded, 0, sec, 0, sec.length);//primeros 16  bytes del sha-256 para la clave secreta
         secret = new SecretKeySpec(sec, "AES");

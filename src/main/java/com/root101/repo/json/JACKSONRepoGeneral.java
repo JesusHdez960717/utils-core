@@ -23,10 +23,10 @@ import com.root101.json.jackson.JACKSON;
 import java.io.File;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <Domain> 
+ * @param <Domain>
  */
 public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<Domain> {
 
@@ -63,7 +63,7 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     @Override
     public void write(Domain object) throws Exception {
         validateDomain(object);
-        
+
         JACKSON.write(file, object);
         firePropertyChange("write", null, object);
     }

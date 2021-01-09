@@ -24,7 +24,7 @@ import java.io.OutputStream;
 import java.util.Scanner;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  */
 public class SerialNumber {

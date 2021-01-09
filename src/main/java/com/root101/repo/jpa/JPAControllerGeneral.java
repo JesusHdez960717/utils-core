@@ -28,10 +28,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <T> 
+ * @param <T>
  */
 public class JPAControllerGeneral<T> implements Validable {
 

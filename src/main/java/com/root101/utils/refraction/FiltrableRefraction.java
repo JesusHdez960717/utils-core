@@ -21,7 +21,7 @@ import com.root101.utils.interfaces.Formateable;
 import java.lang.reflect.Field;
 
 /**
- * 
+ *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
