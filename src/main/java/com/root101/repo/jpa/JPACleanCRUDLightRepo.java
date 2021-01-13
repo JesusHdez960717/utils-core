@@ -33,25 +33,25 @@ public class JPACleanCRUDLightRepo<Domain, Entity> extends JPACleanCRUDRepo<Doma
     }
 
     @Override
-    public void create_light(Domain newObject) throws Exception {
+    public void create_light(Domain newObject) throws RuntimeException {
         super.create(newObject);
         firePropertyChange("create_light", null, null);
     }
 
     @Override
-    public void edit_light(Domain objectToUpdate) throws Exception {
+    public void edit_light(Domain objectToUpdate) throws RuntimeException {
         super.edit(objectToUpdate);
         firePropertyChange("edit_light", null, null);
     }
 
     @Override
-    public void destroy_light(Domain objectToDestroy) throws Exception {
+    public void destroy_light(Domain objectToDestroy) throws RuntimeException {
         super.destroy(objectToDestroy);
         firePropertyChange("destroy_light", null, null);
     }
 
     @Override
-    public void destroyById_light(Object keyId) throws Exception {
+    public void destroyById_light(Object keyId) throws RuntimeException {
         super.destroyById(keyId);
         firePropertyChange("destroyById_light", null, null);
     }

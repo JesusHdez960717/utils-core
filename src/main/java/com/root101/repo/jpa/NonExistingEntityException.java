@@ -21,7 +21,7 @@ package com.root101.repo.jpa;
  * @author Jesus Hernandez Barrios (jhernandezb96@gmail.com)
  * @author JesusHdezWaterloo@Github
  */
-public class NonExistingEntityException extends Exception {
+public class NonExistingEntityException extends RuntimeException {
 
     public NonExistingEntityException() {
     }

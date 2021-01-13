@@ -48,7 +48,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return emf.createEntityManager();
     }
 
-    public T create(T object) throws Exception {
+    public T create(T object) throws RuntimeException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -63,17 +63,24 @@ public class JPAControllerGeneral<T> implements Validable {
         return object;
     }
 
-    public T edit(T object) throws Exception {
+    public T edit(T object) throws RuntimeException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
 
+            Object id = null;
+            //find id
+            try {
+                JPAControllerGeneralUtils.getId(object);//lanza excepcion por el refractor
+            } catch (Exception e) {
+            }
+
             //check the id isn't null
-            Object id = JPAControllerGeneralUtils.getId(object);
-            if (id == null) {
+            if (id == null) {//solo es null si dio error el getId de arriba
                 throw new NonExistingEntityException("To edit " + object + " the id can't be null");
             }
+
             //check if still exist
             T persistedObject = findBy(id);
             if (persistedObject == null) {
@@ -83,8 +90,6 @@ public class JPAControllerGeneral<T> implements Validable {
             //edit it
             em.merge(object);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -102,11 +107,15 @@ public class JPAControllerGeneral<T> implements Validable {
         }
     }
 
-    public T destroy(T object) throws Exception {
-        return destroyById(JPAControllerGeneralUtils.getId(object));
+    public T destroy(T object) throws RuntimeException {
+        try {
+            return destroyById(JPAControllerGeneralUtils.getId(object));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 
-    public T destroyById(Object id) throws Exception {
+    public T destroyById(Object id) throws RuntimeException {
         EntityManager em = null;
         T persistedObject;
 
