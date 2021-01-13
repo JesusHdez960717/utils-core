@@ -27,6 +27,7 @@ import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationResult;
 import com.root101.utils.services.ConverterService;
 import java.util.Collections;
+import java.util.function.Supplier;
 
 /**
  *
@@ -66,7 +67,22 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         this.converter = converter;
     }
 
+    /**
+     * Pasarle el supplier<EMF> para si hay cambios en runtime
+     *
+     * @param emf
+     * @param domainClass
+     * @param entityClass
+     * @deprecated
+     */
+    @Deprecated
     public JPACleanCRUDRepo(EntityManagerFactory emf, Class<Domain> domainClass, Class<Entity> entityClass) {
+        this.domainClass = domainClass;
+        this.entityClass = entityClass;
+        jpaController = new JPAControllerGeneral(emf, entityClass);
+    }
+
+    public JPACleanCRUDRepo(Supplier<EntityManagerFactory> emf, Class<Domain> domainClass, Class<Entity> entityClass) {
         this.domainClass = domainClass;
         this.entityClass = entityClass;
         jpaController = new JPAControllerGeneral(emf, entityClass);

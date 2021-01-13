@@ -21,6 +21,7 @@ import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationMessage;
 import com.root101.clean.core.utils.validation.ValidationResult;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -35,17 +36,31 @@ import javax.persistence.criteria.Root;
  */
 public class JPAControllerGeneral<T> implements Validable {
 
-    private EntityManagerFactory emf = null;
+    private Supplier<EntityManagerFactory> emf = null;
     private final Class<T> classType;
 
+    /**
+     * Como se le pasa directamente el EMF,se crea un supplier que SIEMPRE
+     * devuelve el mismo EMF. Si este EMF cambia en Runtime, probablemente las
+     * instancias de esta clase ya creadas van a seguir usando el EMF viejo
+     *
+     * @param emf
+     * @param c
+     * @deprecated
+     */
+    @Deprecated
     public JPAControllerGeneral(EntityManagerFactory emf, Class<T> c) {
-        this.emf = emf;
+        this(() -> emf, c);
+    }
+
+    public JPAControllerGeneral(Supplier<EntityManagerFactory> emfSupplier, Class<T> c) {
+        this.emf = emfSupplier;
         this.classType = c;
         validate();
     }
 
     public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        return emf.get().createEntityManager();
     }
 
     public T create(T object) throws RuntimeException {
