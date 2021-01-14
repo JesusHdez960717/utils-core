@@ -87,7 +87,7 @@ public class JPAControllerGeneral<T> implements Validable {
             Object id = null;
             //find id
             try {
-                JPAControllerGeneralUtils.getId(object);//lanza excepcion por el refractor
+                id = JPAControllerGeneralUtils.getId(object);//lanza excepcion por el refractor
             } catch (Exception e) {
             }
 
