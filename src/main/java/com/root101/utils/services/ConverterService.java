@@ -30,12 +30,20 @@ import java.util.function.Function;
  */
 public class ConverterService {
 
-    public static <T> T convert(Object objectToConvert, Class<? extends T> convertToClass) throws Exception {
-        return JACKSON.convert(objectToConvert, convertToClass);
+    public static <T> T convert(Object objectToConvert, Class<? extends T> convertToClass) throws RuntimeException {
+        try {
+            return JACKSON.convert(objectToConvert, convertToClass);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 
-    public static <T> List<T> convert(List list, Class<? extends T> convertToClass) throws Exception {
-        return JACKSON.convert(list, convertToClass);
+    public static <T> List<T> convert(List list, Class<? extends T> convertToClass) throws RuntimeException {
+        try {
+            return JACKSON.convert(list, convertToClass);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 
     public static <T> List<Object[]> convert(List<T> values, Function<T, Object[]> converterFunction) {

@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
  */
 public class JPAControllerGeneralUtils {
 
-    public static Object getId(Object obj) throws Exception {
+    public static Object getId(Object obj) throws IllegalArgumentException, IllegalAccessException {
         Object id = null;
         for (Field declaredField : obj.getClass().getDeclaredFields()) {
             for (Annotation declaredAnnotation : declaredField.getDeclaredAnnotations()) {
@@ -45,11 +45,14 @@ public class JPAControllerGeneralUtils {
     }
 
     public static boolean isEntity(Class classType) {
+        return classType.isAnnotationPresent(javax.persistence.Entity.class);
+        /* old code, work fine, test new before delete it
         for (Annotation declaredAnnotation : classType.getDeclaredAnnotations()) {//TODO: cambiar classType.getDeclaredAnnotations() => classType.isAnnotationPresent(javax.persistence.Entity)
             if (declaredAnnotation instanceof javax.persistence.Entity) {
                 return true;
             }
         }
         return false;
+         */
     }
 }

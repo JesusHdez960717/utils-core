@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.jhw.root101.utils'
 
-version = '3.0.1.RELEASE.20210109'
+version = '3.0.2.SNAPSHOT.20210118'
 
 repositories {
     jcenter()

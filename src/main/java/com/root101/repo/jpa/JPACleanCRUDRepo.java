@@ -27,6 +27,7 @@ import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationResult;
 import com.root101.utils.services.ConverterService;
 import java.util.Collections;
+import java.util.function.Supplier;
 
 /**
  *
@@ -48,12 +49,12 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
      */
     protected Converter<Domain, Entity> converter = new Converter<Domain, Entity>() {
         @Override
-        public Domain from(Entity entity) throws Exception {
+        public Domain from(Entity entity) throws RuntimeException {
             return ConverterService.convert(entity, domainClass);
         }
 
         @Override
-        public Entity to(Domain domain) throws Exception {
+        public Entity to(Domain domain) throws RuntimeException {
             return ConverterService.convert(domain, entityClass);
         }
     };
@@ -66,7 +67,22 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         this.converter = converter;
     }
 
+    /**
+     * Pasarle el supplier<EMF> para si hay cambios en runtime
+     *
+     * @param emf
+     * @param domainClass
+     * @param entityClass
+     * @deprecated
+     */
+    @Deprecated
     public JPACleanCRUDRepo(EntityManagerFactory emf, Class<Domain> domainClass, Class<Entity> entityClass) {
+        this.domainClass = domainClass;
+        this.entityClass = entityClass;
+        jpaController = new JPAControllerGeneral(emf, entityClass);
+    }
+
+    public JPACleanCRUDRepo(Supplier<EntityManagerFactory> emf, Class<Domain> domainClass, Class<Entity> entityClass) {
         this.domainClass = domainClass;
         this.entityClass = entityClass;
         jpaController = new JPAControllerGeneral(emf, entityClass);
@@ -81,7 +97,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public Domain create(Domain domain) throws Exception {
+    public Domain create(Domain domain) throws RuntimeException {
         validateDomain(domain);
 
         Entity entity = converter.to(domain);
@@ -94,7 +110,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public Domain edit(Domain domain) throws Exception {
+    public Domain edit(Domain domain) throws RuntimeException {
         validateDomain(domain);
 
         Entity entity = converter.to(domain);
@@ -107,7 +123,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public Domain destroy(Domain domain) throws Exception {
+    public Domain destroy(Domain domain) throws RuntimeException {
         Entity entity = converter.to(domain);
         jpaController.destroy(entity);
         domain = converter.from(entity);
@@ -118,7 +134,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public Domain destroyById(Object keyId) throws Exception {
+    public Domain destroyById(Object keyId) throws RuntimeException {
         Entity entity = jpaController.destroyById(keyId);
         Domain domain = converter.from(entity);
 
@@ -128,7 +144,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public Domain findBy(Object keyId) throws Exception {
+    public Domain findBy(Object keyId) throws RuntimeException {
         Entity entity = jpaController.findBy(keyId);
         Domain domain = converter.from(entity);
 
@@ -142,10 +158,10 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
      * darle mayor peso a los primeros.
      *
      * @return
-     * @throws Exception
+     * @throws RuntimeException
      */
     @Override
-    public List<Domain> findAll() throws Exception {
+    public List<Domain> findAll() throws RuntimeException {
         List<Entity> list = jpaController.findAll();//find all entities
 
         //convert entities to domain
@@ -173,7 +189,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     }
 
     @Override
-    public int count() throws Exception {
+    public int count() throws RuntimeException {
         int count = jpaController.count();
 
         firePropertyChange("count", 0, count);
@@ -205,7 +221,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
-    private ValidationResult validateDomain(Domain domain) throws Exception {
+    private ValidationResult validateDomain(Domain domain) throws RuntimeException {
         if (domain instanceof Validable) {
             return ((Validable) domain).validate().throwException();
         }

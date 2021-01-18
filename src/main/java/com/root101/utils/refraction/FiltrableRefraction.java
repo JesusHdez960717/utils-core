@@ -19,6 +19,7 @@ package com.root101.utils.refraction;
 import com.root101.utils.interfaces.Filtrable;
 import com.root101.utils.interfaces.Formateable;
 import java.lang.reflect.Field;
+import com.root101.clean.core.domain.DomainObject;
 
 /**
  *
@@ -38,6 +39,10 @@ public class FiltrableRefraction {
     public static <T> boolean test(T obj, String text) {
         try {
             Class c = obj.getClass();
+            if (c.getName().startsWith("java.lang")) {
+                return obj.toString().toLowerCase().contains(text.toLowerCase());
+            }
+
             for (Field f : c.getDeclaredFields()) {
                 f.setAccessible(true);
                 Object value = f.get(obj);
@@ -52,9 +57,11 @@ public class FiltrableRefraction {
                     if (((Formateable) value).format().toLowerCase().contains(text.toLowerCase())) {
                         return true;
                     }
-                } else if (value.toString().toLowerCase().contains(text.toLowerCase())) {
-                    return true;
-                }//TODO: add un else con una recursividad siendo T obj = value
+                } else if (value instanceof DomainObject) {
+                    return test(value, text);
+                } else {
+                    return value.toString().toLowerCase().contains(text.toLowerCase());
+                }
             }
         } catch (Exception e) {
         }

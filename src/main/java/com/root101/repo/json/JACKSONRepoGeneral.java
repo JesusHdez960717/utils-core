@@ -44,16 +44,18 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     }
 
     @Override
-    public Domain read() throws Exception {
-        try {
+    public Domain read() throws RuntimeException {
+        try {//trata de leer
             Domain t = JACKSON.read(file, clazz);
             firePropertyChange("read", null, t);
             return t;
-        } catch (Exception e) {
-            Domain neww = clazz.newInstance();
+        } catch (Exception e) {//si no lee trata de crear el por defecto
+            Domain neww = null;
             try {
+                neww = clazz.newInstance();
                 write(neww);
-            } catch (Exception ex) {
+            } catch (Exception ex) {//si no puede crear el por defecto si lanzo la excepcion original
+                throw new RuntimeException(e.getCause());
             }
             onReadError(e);
             return neww;
@@ -61,11 +63,14 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     }
 
     @Override
-    public void write(Domain object) throws Exception {
+    public void write(Domain object) throws RuntimeException {
         validateDomain(object);
-
-        JACKSON.write(file, object);
-        firePropertyChange("write", null, object);
+        try {
+            JACKSON.write(file, object);
+            firePropertyChange("write", null, object);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getCause());
+        }
     }
 
     public File getFile() {
@@ -88,7 +93,7 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
 
-    private ValidationResult validateDomain(Domain domain) throws Exception {
+    private ValidationResult validateDomain(Domain domain) throws RuntimeException {
         if (domain instanceof Validable) {
             return ((Validable) domain).validate().throwException();
         }
