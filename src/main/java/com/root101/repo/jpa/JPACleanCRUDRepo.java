@@ -25,7 +25,7 @@ import javax.persistence.EntityManagerFactory;
 import com.root101.clean.core.utils.SortBy;
 import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationResult;
-import com.root101.utils.services.ConverterService;
+import com.root101.clean.core.app.services.ConverterHandler;
 import java.util.Collections;
 import java.util.function.Supplier;
 
@@ -50,12 +50,12 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
     protected Converter<Domain, Entity> converter = new Converter<Domain, Entity>() {
         @Override
         public Domain from(Entity entity) throws RuntimeException {
-            return ConverterService.convert(entity, domainClass);
+            return ConverterHandler.convert(entity, domainClass);
         }
 
         @Override
         public Entity to(Domain domain) throws RuntimeException {
-            return ConverterService.convert(domain, entityClass);
+            return ConverterHandler.convert(domain, entityClass);
         }
     };
 
