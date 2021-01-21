@@ -34,6 +34,31 @@ public class Misc {
     private Misc() {
     }
 
+    public static boolean exact(List neww, List old) {
+        return neww.equals(old);
+    }
+
+    /**
+     * Siempre return false, porqué: <\br>
+     * Esto solo compara si los elementos coninciden, pero chequea contra ID, o
+     * sea que si se chequea para elementos que se han agregado o quitado
+     * funciona ok, pero para elementos editados, no notaria la diferencia xq el
+     * campo que cambió no forma parte del equals. Para que funcione todo hay
+     * que hacer la comparación por todos los campos, con un refraction o algo
+     * parecido, por lo que habria los tiempos, xq el refraction va a consumir
+     * procesamiento</br>
+     * TODO: prueba de estres
+     *
+     * @param neww
+     * @param old
+     * @return
+     */
+    public static boolean equalsIgnoreOrder(List neww, List old) {
+        return false;//simpre falso hasta que se haga la prueba de estres
+        //return neww.containsAll(old);
+        //return new HashSet<>(neww).equals(new HashSet<>(old));
+    }
+
     public static String toString64(byte[] arr) {
         return String.format("%1$064x", new java.math.BigInteger(1, arr));
     }
