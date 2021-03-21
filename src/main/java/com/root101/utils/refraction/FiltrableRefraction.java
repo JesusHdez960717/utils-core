@@ -39,7 +39,7 @@ public class FiltrableRefraction {
     public static <T> boolean test(T obj, String text) {
         try {
             Class c = obj.getClass();
-            if (c.getName().startsWith("java.lang")) {
+            if (c.getName().startsWith("java.")) {
                 return obj.toString().toLowerCase().contains(text.toLowerCase());
             }
 
@@ -57,10 +57,8 @@ public class FiltrableRefraction {
                     if (((Formateable) value).format().toLowerCase().contains(text.toLowerCase())) {
                         return true;
                     }
-                } else if (value instanceof DomainObject) {
-                    return test(value, text);
-                } else {
-                    return value.toString().toLowerCase().contains(text.toLowerCase());
+                } else if (test(value, text)) {
+                    return true;
                 }
             }
         } catch (Exception e) {
