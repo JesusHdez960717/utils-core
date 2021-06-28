@@ -4,7 +4,7 @@ plugins {
 
 group = 'com.root101.utils'
 
-version = '3.1.1.SNAPSHOT.20210323'
+version = '4.0.0.SNAPSHOT.20210627'
 
 repositories {
     jcenter()
@@ -14,21 +14,22 @@ repositories {
 dependencies {
     implementation project(':clean-core')
     
-    testCompile 'junit:junit:4.13'
-    
     //Jackson
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
 
     //File utils
-    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation 'commons-io:commons-io:2.6'
 
     //generar valores aleatorios
-    compile group: 'org.fluttercode.datafactory', name: 'datafactory', version: '0.8'
+    implementation 'org.fluttercode.datafactory:datafactory:0.8'
     
     //EclipseLink
-    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
-    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
+    implementation 'org.eclipse.persistence:eclipselink:3.0.2-RC1'
+    implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:3.0.2-RC1'
+    implementation 'org.hibernate:hibernate-core:5.5.3.Final'
+
+    implementation 'javax.validation:validation-api:2.0.1.Final'
 
 }
