@@ -46,8 +46,9 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     @Override
     public Domain read() throws RuntimeException {
         try {//trata de leer
+            firePropertyChange("pre_read", null, null);
             Domain t = JACKSON.read(file, clazz);
-            firePropertyChange("read", null, t);
+            firePropertyChange("post_read", null, t);
             return t;
         } catch (Exception e) {//si no lee trata de crear el por defecto
             Domain neww = null;
@@ -66,8 +67,9 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     public void write(Domain object) throws RuntimeException {
         validateDomain(object);
         try {
+            firePropertyChange("pre_write", null, object);
             JACKSON.write(file, object);
-            firePropertyChange("write", null, object);
+            firePropertyChange("post_write", null, object);
         } catch (Exception e) {
             throw new RuntimeException(e.getCause());
         }
