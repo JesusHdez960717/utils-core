@@ -39,7 +39,7 @@ public class Misc {
     }
 
     /**
-     * Siempre return false, porqué: <\br>
+     * Siempre return false, porque: <\br>
      * Esto solo compara si los elementos coninciden, pero chequea contra ID, o
      * sea que si se chequea para elementos que se han agregado o quitado
      * funciona ok, pero para elementos editados, no notaria la diferencia xq el

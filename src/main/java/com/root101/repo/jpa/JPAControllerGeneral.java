@@ -29,6 +29,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
+ * Para hacer la coneccion dinamica, se puede lo mismo pasarle el Supplier que
+ * sobreescribir el metodo entityManagerFactory().
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
@@ -41,26 +43,30 @@ public class JPAControllerGeneral<T> implements Validable {
 
     /**
      * Como se le pasa directamente el EMF,se crea un supplier que SIEMPRE
-     * devuelve el mismo EMF. Si este EMF cambia en Runtime, probablemente las
-     * instancias de esta clase ya creadas van a seguir usando el EMF viejo
+     * devuelve el mismo EMF. Si este EMF cambia en Runtime, las instancias de
+     * esta clase ya creadas van a seguir usando el EMF viejo
      *
-     * @param emf
-     * @param c
+     * @param emf EntityManagerFactory
+     * @param classType Entity.class
      * @deprecated
      */
     @Deprecated
-    public JPAControllerGeneral(EntityManagerFactory emf, Class<T> c) {
-        this(() -> emf, c);
+    public JPAControllerGeneral(EntityManagerFactory emf, Class<T> classType) {
+        this(() -> emf, classType);
     }
 
-    public JPAControllerGeneral(Supplier<EntityManagerFactory> emfSupplier, Class<T> c) {
+    public JPAControllerGeneral(Supplier<EntityManagerFactory> emfSupplier, Class<T> classType) {
         this.emf = emfSupplier;
-        this.classType = c;
+        this.classType = classType;
         validate();
     }
 
+    protected EntityManagerFactory entityManagerFactory() {
+        return emf.get();
+    }
+
     public EntityManager getEntityManager() {
-        return emf.get().createEntityManager();
+        return entityManagerFactory().createEntityManager();
     }
 
     public T create(T object) throws RuntimeException {
@@ -126,7 +132,7 @@ public class JPAControllerGeneral<T> implements Validable {
         try {
             return destroyById(JPAControllerGeneralUtils.getId(object));
         } catch (Exception e) {
-            throw new RuntimeException(e.getCause());
+            throw new RuntimeException(e);
         }
     }
 
