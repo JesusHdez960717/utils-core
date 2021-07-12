@@ -27,7 +27,7 @@ import com.root101.clean.core.utils.validation.ValidationResult;
  * @author JesusHdezWaterloo@Github
  * @param <Domain>
  */
-public abstract class InMemoryRepo<Domain> implements ReadWriteRepository<Domain> {
+public class InMemoryReadWriteRepo<Domain> implements ReadWriteRepository<Domain> {
 
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
@@ -54,7 +54,7 @@ public abstract class InMemoryRepo<Domain> implements ReadWriteRepository<Domain
         }
     }
 
-    protected abstract void onReadError(Exception e);
+    protected void onReadError(Exception e){}
 
     @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
