@@ -16,13 +16,13 @@
  */
 package com.root101.repo.memory;
 
-import static com.root101.clean.core.app.PropertyChangeConstrains.*;
-import com.root101.clean.core.app.repo.CRUDRepository;
 import java.util.List;
-import com.root101.clean.core.utils.validation.Validable;
-import com.root101.clean.core.utils.validation.ValidationResult;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import com.root101.clean.core.app.repo.CRUDRepository;
+import com.root101.clean.core.utils.validation.Validable;
+import com.root101.clean.core.utils.validation.ValidationResult;
+import static com.root101.clean.core.app.PropertyChangeConstrains.*;
 
 /**
  *

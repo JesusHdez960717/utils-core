@@ -16,6 +16,7 @@
  */
 package com.root101.repo.jpa;
 
+import static com.root101.clean.core.app.PropertyChangeConstrains.*;
 import com.root101.clean.core.app.repo.CRUDRepository;
 import com.root101.clean.core.app.repo.Converter;
 import com.root101.utils.others.Misc;
@@ -98,65 +99,65 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
 
     @Override
     public Domain create(Domain domain) throws RuntimeException {
-        firePropertyChange("pre_create", null, domain);
+        firePropertyChange(BEFORE_CREATE, null, domain);
         validateDomain(domain);
 
         Entity entity = converter.to(domain);
         jpaController.create(entity);
         domain = converter.from(entity);
 
-        firePropertyChange("post_create", null, domain);
+        firePropertyChange(AFTER_CREATE, null, domain);
 
         return domain;
     }
 
     @Override
     public Domain edit(Domain domain) throws RuntimeException {
-        firePropertyChange("pre_edit", null, domain);
+        firePropertyChange(BEFORE_EDIT, null, domain);
         validateDomain(domain);
 
         Entity entity = converter.to(domain);
         jpaController.edit(entity);
         domain = converter.from(entity);
 
-        firePropertyChange("post_edit", null, domain);
+        firePropertyChange(AFTER_EDIT, null, domain);
 
         return domain;
     }
 
     @Override
     public Domain destroy(Domain domain) throws RuntimeException {
-        firePropertyChange("pre_destroy", null, domain);
+        firePropertyChange(BEFORE_DESTROY, null, domain);
         
         Entity entity = converter.to(domain);
         jpaController.destroy(entity);
         domain = converter.from(entity);
 
-        firePropertyChange("post_destroy", null, domain);
+        firePropertyChange(AFTER_DESTROY, null, domain);
 
         return domain;
     }
 
     @Override
     public Domain destroyById(Object keyId) throws RuntimeException {
-        firePropertyChange("pre_destroyById", null, keyId);
+        firePropertyChange(BEFORE_DESTROY_BY_ID, null, keyId);
         
         Entity entity = jpaController.destroyById(keyId);
         Domain domain = converter.from(entity);
 
-        firePropertyChange("post_destroyById", null, domain);
+        firePropertyChange(AFTER_DESTROY_BY_ID, null, domain);
 
         return domain;
     }
 
     @Override
     public Domain findBy(Object keyId) throws RuntimeException {
-        firePropertyChange("pre_findBy", null, keyId);
+        firePropertyChange(BEFORE_FIND_BY, null, keyId);
         
         Entity entity = jpaController.findBy(keyId);
         Domain domain = converter.from(entity);
 
-        firePropertyChange("post_findBy", null, domain);
+        firePropertyChange(AFTER_FIND_BY, null, domain);
 
         return domain;
     }
@@ -170,7 +171,7 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
      */
     @Override
     public List<Domain> findAll() throws RuntimeException {
-        firePropertyChange("pre_findAll", null, null);
+        firePropertyChange(BEFORE_FIND_ALL, null, null);
         List<Entity> list = jpaController.findAll();//find all entities
 
         //convert entities to domain
@@ -195,18 +196,18 @@ public class JPACleanCRUDRepo<Domain, Entity> implements CRUDRepository<Domain> 
         }
         //----------------------------------------------------------
         
-        firePropertyChange("post_findAll", null, answ);
+        firePropertyChange(AFTER_FIND_ALL, null, answ);
 
         return answ;
     }
 
     @Override
     public int count() throws RuntimeException {
-        firePropertyChange("pre_count", 0, 0);
+        firePropertyChange(BEFORE_COUNT, 0, 0);
         
         int count = jpaController.count();
 
-        firePropertyChange("post_count", 0, count);
+        firePropertyChange(AFTER_COUNT, 0, count);
 
         return count;
     }

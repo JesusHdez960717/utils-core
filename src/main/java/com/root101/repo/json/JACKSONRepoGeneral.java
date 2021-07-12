@@ -16,6 +16,7 @@
  */
 package com.root101.repo.json;
 
+import static com.root101.clean.core.app.PropertyChangeConstrains.*;
 import com.root101.clean.core.app.repo.ReadWriteRepository;
 import com.root101.clean.core.utils.validation.Validable;
 import com.root101.clean.core.utils.validation.ValidationResult;
@@ -46,9 +47,9 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     @Override
     public Domain read() throws RuntimeException {
         try {//trata de leer
-            firePropertyChange("pre_read", null, null);
+            firePropertyChange(BEFORE_READ, null, null);
             Domain t = JACKSON.read(file, clazz);
-            firePropertyChange("post_read", null, t);
+            firePropertyChange(AFTER_READ, null, t);
             return t;
         } catch (Exception e) {//si no lee trata de crear el por defecto
             Domain neww = null;
@@ -67,9 +68,9 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     public void write(Domain object) throws RuntimeException {
         validateDomain(object);
         try {
-            firePropertyChange("pre_write", null, object);
+            firePropertyChange(BEFORE_WRITE, null, object);
             JACKSON.write(file, object);
-            firePropertyChange("post_write", null, object);
+            firePropertyChange(AFTER_WRITE, null, object);
         } catch (Exception e) {
             throw new RuntimeException(e.getCause());
         }
@@ -96,8 +97,8 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     }
 
     private ValidationResult validateDomain(Domain domain) throws RuntimeException {
-        if (domain instanceof Validable) {
-            return ((Validable) domain).validate().throwException();
+        if (domain instanceof Validable validable) {
+            return validable.validate().throwException();
         }
         return new ValidationResult();
     }

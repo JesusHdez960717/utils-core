@@ -19,7 +19,6 @@ package com.root101.utils.refraction;
 import com.root101.utils.interfaces.Filtrable;
 import com.root101.utils.interfaces.Formateable;
 import java.lang.reflect.Field;
-import com.root101.clean.core.domain.DomainObject;
 
 /**
  *
