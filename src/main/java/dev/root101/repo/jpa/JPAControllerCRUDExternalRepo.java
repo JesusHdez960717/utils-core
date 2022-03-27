@@ -34,28 +34,15 @@ import javax.persistence.criteria.Root;
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <T>
+ * @param <Entity>
  */
-public class JPAControllerGeneral<T> implements Validable {
+public class JPAControllerCRUDExternalRepo<Entity> implements Validable {
 
     private Supplier<EntityManagerFactory> emf = null;
-    private final Class<T> classType;
+    private final Class<Entity> classType;
 
-    /**
-     * Como se le pasa directamente el EMF,se crea un supplier que SIEMPRE
-     * devuelve el mismo EMF. Si este EMF cambia en Runtime, las instancias de
-     * esta clase ya creadas van a seguir usando el EMF viejo
-     *
-     * @param emf EntityManagerFactory
-     * @param classType Entity.class
-     * @deprecated
-     */
-    @Deprecated
-    public JPAControllerGeneral(EntityManagerFactory emf, Class<T> classType) {
-        this(() -> emf, classType);
-    }
 
-    public JPAControllerGeneral(Supplier<EntityManagerFactory> emfSupplier, Class<T> classType) {
+    public JPAControllerCRUDExternalRepo(Supplier<EntityManagerFactory> emfSupplier, Class<Entity> classType) {
         this.emf = emfSupplier;
         this.classType = classType;
         validate();
@@ -65,11 +52,11 @@ public class JPAControllerGeneral<T> implements Validable {
         return emf.get();
     }
 
-    public EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
         return entityManagerFactory().createEntityManager();
     }
 
-    public T create(T object) throws RuntimeException {
+    public Entity create(Entity object) throws RuntimeException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -84,7 +71,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return object;
     }
 
-    public T edit(T object) throws RuntimeException {
+    public Entity edit(Entity object) throws RuntimeException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -103,7 +90,7 @@ public class JPAControllerGeneral<T> implements Validable {
             }
 
             //check if still exist
-            T persistedObject = findBy(id);
+            Entity persistedObject = findBy(id);
             if (persistedObject == null) {
                 throw new NonExistingEntityException(object + " no longer exists.");
             }
@@ -119,7 +106,7 @@ public class JPAControllerGeneral<T> implements Validable {
         return object;
     }
 
-    public T findBy(Object id) {
+    public Entity findBy(Object id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(classType, id);//return null if don't exits
@@ -128,7 +115,7 @@ public class JPAControllerGeneral<T> implements Validable {
         }
     }
 
-    public T destroy(T object) throws RuntimeException {
+    public Entity destroy(Entity object) throws RuntimeException {
         try {
             return destroyById(JPAControllerGeneralUtils.getId(object));
         } catch (Exception e) {
@@ -136,9 +123,9 @@ public class JPAControllerGeneral<T> implements Validable {
         }
     }
 
-    public T destroyById(Object id) throws RuntimeException {
+    public Entity destroyById(Object id) throws RuntimeException {
         EntityManager em = null;
-        T persistedObject;
+        Entity persistedObject;
 
         try {
             em = getEntityManager();
@@ -159,15 +146,15 @@ public class JPAControllerGeneral<T> implements Validable {
         return persistedObject;
     }
 
-    public List<T> findAll() {
+    public List<Entity> findAll() {
         return findAll(true, -1, -1);
     }
 
-    public List<T> findAll(int maxResults, int firstResult) {
+    public List<Entity> findAll(int maxResults, int firstResult) {
         return findAll(false, maxResults, firstResult);
     }
 
-    private List<T> findAll(boolean all, int maxResults, int firstResult) {
+    private List<Entity> findAll(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -187,7 +174,7 @@ public class JPAControllerGeneral<T> implements Validable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<T> rt = cq.from(classType);
+            Root<Entity> rt = cq.from(classType);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -198,7 +185,7 @@ public class JPAControllerGeneral<T> implements Validable {
 
     @Override
     public ValidationResult validate() throws ValidationException {
-        ValidationResult val = new ValidationResult();
+        ValidationResult val = ValidationResult.build();
         if (!JPAControllerGeneralUtils.isEntity(classType)) {
             val.add(ValidationMessage.from("classType", classType, classType + "isn't an javax.persistence.Entity"));
         }

@@ -34,5 +34,7 @@ dependencies {
 
     //validation
     implementation 'org.glassfish:jakarta.el:4.0.1'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+    implementation 'org.hibernate.validator:hibernate-validator-annotation-processor:7.0.4.Final'
 
 }

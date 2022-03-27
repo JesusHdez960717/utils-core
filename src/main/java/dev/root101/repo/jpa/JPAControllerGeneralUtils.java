@@ -31,7 +31,7 @@ public class JPAControllerGeneralUtils {
         for (Field declaredField : obj.getClass().getDeclaredFields()) {
             for (Annotation declaredAnnotation : declaredField.getDeclaredAnnotations()) {
                 if (declaredAnnotation instanceof javax.persistence.Id) {
-                    boolean oldFieldAccessibility = declaredField.isAccessible();
+                    boolean oldFieldAccessibility = declaredField.canAccess(obj);
                     try {
                         declaredField.setAccessible(true);//in case it's private, force the readable
                         id = declaredField.get(obj);
