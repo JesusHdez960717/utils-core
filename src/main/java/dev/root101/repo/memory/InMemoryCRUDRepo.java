@@ -19,27 +19,25 @@ package dev.root101.repo.memory;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import dev.root101.clean.core.app.repo.CRUDRepository;
-import dev.root101.clean.core.utils.validation.Validable;
-import dev.root101.clean.core.utils.validation.ValidationResult;
 import static dev.root101.clean.core.app.PropertyChangeConstrains.*;
+import dev.root101.clean.core.repo.external_repo.CRUDExternalRepository;
 
 /**
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <Domain>
+ * @param <Entity>
  */
-public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUDRepository<Domain> {
+public class InMemoryCRUDRepo<Entity extends Comparable<Entity>> implements CRUDExternalRepository<Entity> {
 
+    private final boolean doFirePropertyChanges = false;//for the momento allways enabled
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
-    private final TreeSet<Domain> list = new TreeSet<>();
+    private final TreeSet<Entity> list = new TreeSet<>();
 
     @Override
-    public Domain create(Domain domain) throws RuntimeException {
+    public Entity create(Entity domain) throws RuntimeException {
         firePropertyChange(BEFORE_CREATE, null, domain);
-        validateDomain(domain);
 
         list.add(domain);
 
@@ -49,9 +47,8 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
     }
 
     @Override
-    public Domain edit(Domain domain) throws RuntimeException {
+    public Entity edit(Entity domain) throws RuntimeException {
         firePropertyChange(BEFORE_EDIT, null, domain);
-        validateDomain(domain);
 
         list.remove(domain);
         list.add(domain);
@@ -62,7 +59,7 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
     }
 
     @Override
-    public Domain destroy(Domain domain) throws RuntimeException {
+    public Entity destroy(Entity domain) throws RuntimeException {
         firePropertyChange(BEFORE_DESTROY, null, domain);
 
         list.remove(domain);
@@ -73,10 +70,10 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
     }
 
     @Override
-    public Domain destroyById(Object keyId) throws RuntimeException {
+    public Entity destroyById(Object keyId) throws RuntimeException {
         firePropertyChange(BEFORE_DESTROY_BY_ID, null, keyId);
 
-        Domain domain = findBy(keyId);
+        Entity domain = findBy(keyId);
         list.remove(domain);
 
         firePropertyChange(AFTER_DESTROY_BY_ID, null, domain);
@@ -85,10 +82,10 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
     }
 
     @Override
-    public Domain findBy(Object keyId) throws RuntimeException {
+    public Entity findBy(Object keyId) throws RuntimeException {
         firePropertyChange(BEFORE_FIND_BY, null, keyId);
 
-        Domain domain = list.stream().findFirst().get();
+        Entity domain = list.stream().findFirst().get();
 
         firePropertyChange(AFTER_FIND_BY, null, domain);
 
@@ -103,11 +100,11 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
      * @throws RuntimeException
      */
     @Override
-    public List<Domain> findAll() throws RuntimeException {
+    public List<Entity> findAll() throws RuntimeException {
         firePropertyChange(BEFORE_FIND_ALL, null, null);
 
         //convert entities to domain
-        List<Domain> answ = list.stream().collect(Collectors.toList());
+        List<Entity> answ = list.stream().collect(Collectors.toList());
 
         firePropertyChange(AFTER_FIND_ALL, null, answ);
 
@@ -125,34 +122,23 @@ public class InMemoryCRUDRepo<Domain extends Comparable<Domain>> implements CRUD
         return count;
     }
 
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
-    /**
-     * Add PropertyChangeListener.
-     *
-     * @param listener
-     */
     @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.addPropertyChangeListener(listener);
+        }
     }
 
-    /**
-     * Remove PropertyChangeListener.
-     *
-     * @param listener
-     */
     @Override
     public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.removePropertyChangeListener(listener);
+        }
     }
 
-    private ValidationResult validateDomain(Domain domain) throws RuntimeException {
-        if (domain instanceof Validable) {
-            return ((Validable) domain).validate().throwException();
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
         }
-        return new ValidationResult();
     }
 }

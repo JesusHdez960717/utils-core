@@ -20,7 +20,7 @@ import static dev.root101.clean.core.app.PropertyChangeConstrains.*;
 import dev.root101.clean.core.app.repo.ReadWriteRepository;
 import dev.root101.clean.core.utils.validation.Validable;
 import dev.root101.clean.core.utils.validation.ValidationResult;
-import dev.root101.json.jackson.JACKSON;
+import dev.root101.jackson.JACKSON;
 import java.io.File;
 
 /**

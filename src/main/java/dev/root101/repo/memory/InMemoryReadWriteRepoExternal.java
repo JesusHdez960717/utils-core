@@ -17,32 +17,30 @@
 package dev.root101.repo.memory;
 
 import static dev.root101.clean.core.app.PropertyChangeConstrains.*;
-import dev.root101.clean.core.app.repo.ReadWriteRepository;
-import dev.root101.clean.core.utils.validation.Validable;
-import dev.root101.clean.core.utils.validation.ValidationResult;
+import dev.root101.clean.core.repo.external_repo.ReadWriteExternalRepository;
 
 /**
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <Domain>
+ * @param <Entity>
  */
-public class InMemoryReadWriteRepo<Domain> implements ReadWriteRepository<Domain> {
+public class InMemoryReadWriteRepoExternal<Entity> implements ReadWriteExternalRepository<Entity> {
 
+    private final boolean doFirePropertyChanges = false;//for the momento allways enabled
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
-    private Domain object;
+    private Entity object;
 
     @Override
-    public Domain read() throws RuntimeException {
+    public Entity read() throws RuntimeException {
         firePropertyChange(BEFORE_READ, null, null);
         firePropertyChange(AFTER_READ, null, object);
         return object;
     }
 
     @Override
-    public void write(Domain object) throws RuntimeException {
-        validateDomain(object);
+    public void write(Entity object) throws RuntimeException {
         try {
             firePropertyChange(BEFORE_WRITE, null, object);
 
@@ -54,26 +52,27 @@ public class InMemoryReadWriteRepo<Domain> implements ReadWriteRepository<Domain
         }
     }
 
-    protected void onReadError(Exception e){}
+    protected void onReadError(Exception e) {
+    }
 
     @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.addPropertyChangeListener(listener);
+        }
     }
 
     @Override
     public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
-    private ValidationResult validateDomain(Domain domain) throws RuntimeException {
-        if (domain instanceof Validable validable) {
-            return validable.validate().throwException();
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.removePropertyChangeListener(listener);
         }
-        return new ValidationResult();
     }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        }
+    }
+
 }
