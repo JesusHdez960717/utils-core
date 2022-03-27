@@ -17,9 +17,7 @@
 package dev.root101.repo.json;
 
 import static dev.root101.clean.core.app.PropertyChangeConstrains.*;
-import dev.root101.clean.core.app.repo.ReadWriteRepository;
-import dev.root101.clean.core.utils.validation.Validable;
-import dev.root101.clean.core.utils.validation.ValidationResult;
+import dev.root101.clean.core.repo.external_repo.ReadWriteExternalRepository;
 import dev.root101.jackson.JACKSON;
 import java.io.File;
 
@@ -27,16 +25,17 @@ import java.io.File;
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <Domain>
+ * @param <Entity>
  */
-public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<Domain> {
+public abstract class JACKSONReadWriteExternalRepo<Entity> implements ReadWriteExternalRepository<Entity> {
 
+    private final boolean doFirePropertyChanges = false;//for the momento allways enabled
     private transient final java.beans.PropertyChangeSupport propertyChangeSupport = new java.beans.PropertyChangeSupport(this);
 
     private final File file;
-    private final Class<Domain> clazz;
+    private final Class<Entity> clazz;
 
-    public JACKSONRepoGeneral(String file, Class clazz) {
+    public JACKSONReadWriteExternalRepo(String file, Class clazz) {
         this.file = new File(file);
         if (this.file.getParentFile() != null) {
             this.file.getParentFile().mkdirs();
@@ -45,14 +44,14 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     }
 
     @Override
-    public Domain read() throws RuntimeException {
+    public Entity read() throws RuntimeException {
         try {//trata de leer
             firePropertyChange(BEFORE_READ, null, null);
-            Domain t = JACKSON.read(file, clazz);
+            Entity t = JACKSON.read(file, clazz);
             firePropertyChange(AFTER_READ, null, t);
             return t;
         } catch (Exception e) {//si no lee trata de crear el por defecto
-            Domain neww = null;
+            Entity neww = null;
             try {
                 neww = clazz.newInstance();
                 write(neww);
@@ -65,8 +64,7 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
     }
 
     @Override
-    public void write(Domain object) throws RuntimeException {
-        validateDomain(object);
+    public void write(Entity object) throws RuntimeException {
         try {
             firePropertyChange(BEFORE_WRITE, null, object);
             JACKSON.write(file, object);
@@ -84,22 +82,21 @@ public abstract class JACKSONRepoGeneral<Domain> implements ReadWriteRepository<
 
     @Override
     public void addPropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.addPropertyChangeListener(listener);
+        }
     }
 
     @Override
     public void removePropertyChangeListener(java.beans.PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    private void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
-    private ValidationResult validateDomain(Domain domain) throws RuntimeException {
-        if (domain instanceof Validable validable) {
-            return validable.validate().throwException();
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.removePropertyChangeListener(listener);
         }
-        return new ValidationResult();
+    }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        if (doFirePropertyChanges) {
+            propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        }
     }
 }

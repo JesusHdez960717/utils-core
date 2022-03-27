@@ -5,3 +5,5 @@
         * **IMPROVEMENT** :raised_hands: : Extract Jackson folder, removed converter service.
     * **REPO**:
         * **IMPROVEMENT** :raised_hands: : Migrated in memory external repos.
+        * **IMPROVEMENT** :raised_hands: : Migrated `JACKSONReadWriteExternalRepo` external repos.
+
