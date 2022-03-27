@@ -14,24 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.root101.json.jackson.serializer_deserializer.local_date;
+package dev.root101.jackson.serializer_deserializer.date;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
-public class LocalDateJsonDeserializer extends JsonDeserializer<LocalDate> {
+public class DateJsonSerializer extends JsonSerializer<Date> {
 
     @Override
-    public LocalDate deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        String toString = p.getCodec().readValue(p, String.class).replace(" ", "");
-        return LocalDate.parse(toString, LocalDateJsonSerializer.LOCAL_DATE_FORMATTER);
+    public void serialize(Date value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeStartObject();
+
+        gen.writeFieldName("dia");
+        gen.writeString(String.valueOf(value.getDate()));
+
+        gen.writeFieldName("mes");
+        gen.writeString(String.valueOf(value.getMonth()));
+
+        gen.writeFieldName("anno");
+        gen.writeString(String.valueOf(value.getYear() + 1900));
+
+        gen.writeEndObject();
     }
 }
