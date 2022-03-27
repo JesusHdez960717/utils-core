@@ -4,7 +4,7 @@ plugins {
 
 group = 'dev.root101.utils'
 
-version = '5.0.0.SNAPSHOT.20220000'
+version = '5.0.0.SNAPSHOT.20220327'
 
 repositories {
     jcenter()
@@ -18,23 +18,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
-
-    //File utils
-    implementation 'commons-io:commons-io:2.11.0'
-
-    //generar valores aleatorios
-    implementation 'org.fluttercode.datafactory:datafactory:0.8'
     
     //EclipseLink
-    implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'javax.persistence:javax.persistence-api:2.2'
-    implementation 'org.eclipse.persistence:eclipselink:3.1.0-M1'
-    implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:3.1.0-M1'
-    implementation 'org.hibernate.orm:hibernate-core:6.0.0.CR2'
 
     //validation
     implementation 'org.glassfish:jakarta.el:4.0.1'
     implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
-    implementation 'org.hibernate.validator:hibernate-validator-annotation-processor:7.0.4.Final'
 
 }

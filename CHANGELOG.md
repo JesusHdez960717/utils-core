@@ -1,4 +1,4 @@
-* 5.0.0.SNAPSHOT.20220000: Complete review of the plugin. Updated focussed mainly on server side/microservices architecture.
+* 5.0.0.SNAPSHOT.20220327: Complete review of the plugin. Updated focussed mainly on server side/microservices architecture.
     * **JACKSON**:
         * **IMPROVEMENT** :raised_hands: : Extract Jackson folder, removed converter service.
     * **REPO**:
