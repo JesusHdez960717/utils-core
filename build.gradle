@@ -2,9 +2,9 @@ plugins {
     id 'java'
 }
 
-group = 'com.root101.utils'
+group = 'dev.root101.utils'
 
-version = '4.1.0.SNAPSHOT.20210705'
+version = '5.0.0.SNAPSHOT.20220327'
 
 repositories {
     jcenter()
@@ -15,21 +15,15 @@ dependencies {
     implementation project(':clean-core')
     
     //Jackson
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
-
-    //File utils
-    implementation 'commons-io:commons-io:2.6'
-
-    //generar valores aleatorios
-    implementation 'org.fluttercode.datafactory:datafactory:0.8'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
     
     //EclipseLink
-    implementation 'org.eclipse.persistence:eclipselink:3.0.2-RC1'
-    implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:3.0.2-RC1'
-    implementation 'org.hibernate:hibernate-core:5.5.3.Final'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
 
-    implementation 'javax.validation:validation-api:2.0.1.Final'
+    //validation
+    implementation 'org.glassfish:jakarta.el:4.0.1'
+    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
 
 }

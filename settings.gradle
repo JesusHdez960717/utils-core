@@ -1,4 +1,4 @@
 rootProject.name = 'utils-core'
 
 include ':clean-core'
-project(':clean-core').projectDir = "E:\\Trabajos\\Projects\\GIT Projects Gradle\\clean-core" as File
+project(':clean-core').projectDir = "D:\\Programing\\Java\\Projects\\clean-core" as File
