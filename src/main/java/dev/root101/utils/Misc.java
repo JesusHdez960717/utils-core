@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.root101.utils.others;
+package dev.root101.utils;
 
 import java.lang.reflect.Array;
 import java.util.Formatter;
@@ -73,14 +73,18 @@ public class Misc {
 
     public static float evaluate(float a, String op, float b) {
         switch (op) {
-            case "+":
+            case "+" -> {
                 return a + b;
-            case "-":
+            }
+            case "-" -> {
                 return a - b;
-            case "*":
+            }
+            case "*" -> {
                 return a * b;
-            case "/":
+            }
+            case "/" -> {
                 return b == 0 ? 0 : a / b;
+            }
         }
         return 0;
     }

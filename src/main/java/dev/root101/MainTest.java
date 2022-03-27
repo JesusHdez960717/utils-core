@@ -16,9 +16,6 @@
  */
 package dev.root101;
 
-import dev.root101.clean.core.app.repo.CRUDRepository;
-import dev.root101.clean.core.domain.DomainObject;
-import dev.root101.repo.memory.InMemoryCRUDRepo;
 
 /**
  *
@@ -27,51 +24,7 @@ import dev.root101.repo.memory.InMemoryCRUDRepo;
 public class MainTest {
 
     public static void main(String args[]) {
-        CRUDRepository<Person> repo = new InMemoryCRUDRepo();
-
-        repo.create(Person.build(1, "123"));
-
-        Person p = Person.build(2, "hi");
-        repo.create(p);
-
-        System.out.println(repo.findAll());
-        System.out.println(repo.count());
-
-        Person p2 = Person.build(2, "hiiiiiiii");
-        repo.edit(p2);
-
-        System.out.println(repo.findAll());
-        System.out.println(repo.count());
         
-        
-        repo.destroyById(1);
-
-        System.out.println(repo.findAll());
-        System.out.println(repo.count());
     }
 
-    public static class Person extends DomainObject implements Comparable<Person> {
-
-        public static Person build(int id, String name) {
-            return new Person(id, name);
-        }
-        int id;
-        String name;
-
-        public Person(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        @Override
-        public int compareTo(Person o) {
-            return Integer.compare(id, o.id);
-        }
-
-        @Override
-        public String toString() {
-            return String.format("id: %s name: %s", id, name);
-        }
-
-    }
 }

@@ -19,7 +19,7 @@ package dev.root101.repo.jpa;
 import static dev.root101.clean.core.app.PropertyChangeConstrains.*;
 import dev.root101.clean.core.app.repo.CRUDRepository;
 import dev.root101.clean.core.app.repo.Converter;
-import dev.root101.utils.others.Misc;
+import dev.root101.utils.Misc;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

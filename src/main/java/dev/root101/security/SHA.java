@@ -18,7 +18,7 @@ package dev.root101.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import dev.root101.utils.others.Misc;
+import dev.root101.utils.Misc;
 
 /**
  *

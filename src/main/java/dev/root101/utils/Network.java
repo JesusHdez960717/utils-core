@@ -14,14 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.root101.utils.interfaces;
+package dev.root101.utils;
+
+import java.net.Socket;
 
 /**
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
  */
-public interface Formateable {
+public class Network {
 
-    public String format();
+    /**
+     * Check if some service is running in //ip:port
+     *
+     * @param ip
+     * @param port
+     * @return
+     */
+    public static boolean isRunning(String ip, int port) {
+        Socket socket = null;
+        try {
+            socket = new Socket(ip, port);
+            return true;//socket.isConnected();
+        } catch (Exception e) {
+        } finally {
+            if (socket != null) {
+                try {
+                    socket.close();
+                    socket = null;
+                } catch (Exception e) {
+                }
+            }
+        }
+        return false;
+    }
 }

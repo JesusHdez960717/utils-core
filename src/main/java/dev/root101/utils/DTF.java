@@ -14,42 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.root101.utils.others;
+package dev.root101.utils;
 
-import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
+ * DateTimeFormatter
  *
  * @author Root101 (jhernandezb96@gmail.com, +53-5-426-8660)
  * @author JesusHdezWaterloo@Github
- * @param <T>
  */
-public class Pair<T> implements Serializable {
+public class DTF {
 
-    private T A;
-    private T B;
+    public static final DateTimeFormatter LOCAL_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
-    public Pair() {
+    private DTF() {
     }
 
-    public Pair(T A, T B) {
-        this.A = A;
-        this.B = B;
+    public static final LocalDate convert(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
-    public T getA() {
-        return A;
-    }
-
-    public void setA(T A) {
-        this.A = A;
-    }
-
-    public T getB() {
-        return B;
-    }
-
-    public void setB(T B) {
-        this.B = B;
+    public static final Date convert(LocalDate date) {
+        return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }
