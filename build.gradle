@@ -23,7 +23,5 @@ dependencies {
     implementation 'javax.persistence:javax.persistence-api:2.2'
 
     //validation
-    implementation 'org.glassfish:jakarta.el:4.0.1'
-    implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
-
+    implementation 'javax.validation:validation-api:2.0.1.Final'
 }
